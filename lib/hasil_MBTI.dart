@@ -55,7 +55,7 @@ class HasilMBTI extends StatelessWidget {
           'assets/default.jpg'; // Ganti dengan gambar default jika tipe tidak dikenali
       mbtiType = personalityType;
       description = 'Kepribadian yang belum terdefinisi dengan jelas.';
-      similarity = '0 %';
+      similarity = '0.1 %';
     }
 
     return Scaffold(
