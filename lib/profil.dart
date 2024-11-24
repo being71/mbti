@@ -15,14 +15,14 @@ class ProfilScreen extends StatelessWidget {
       builder: (context, snapshot) {
         // Tampilkan indikator loading saat data sedang diambil
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(
+          return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         }
 
         // Tampilkan pesan error jika terjadi kesalahan saat mengambil data
         if (snapshot.hasError) {
-          return Scaffold(
+          return const Scaffold(
             body: Center(child: Text('Terjadi kesalahan. Silakan coba lagi!')),
           );
         }
@@ -68,20 +68,20 @@ class Profil_Notfound extends StatelessWidget {
               padding: const EdgeInsets.only(top: 50, bottom: 10, left: 20),
               child: Text(
                 'Hai, $name!',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Image.asset(
               'assets/head.png', // Path ke gambar asset
               width: 400, // Set lebar sesuai kebutuhan
               height: 400, // Set tinggi sesuai kebutuhan
             ),
-            Text(
+            const Text(
               'Kamu belum melakukan\nTes MBTI!',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -112,7 +112,7 @@ class Profil_Notfound extends StatelessWidget {
             // Navigasi ke HomeScreen
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
             );
           } else if (index == 1) {
             // Navigasi ke QuestionScreen (Tes MBTI)
@@ -164,7 +164,7 @@ class Profil_HasilMBTI extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: Color(0xFFDAEBE3),
+      backgroundColor: const Color(0xFFDAEBE3),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0.0),
@@ -178,17 +178,17 @@ class Profil_HasilMBTI extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 50, bottom: 10, left: 20),
                 child: Text(
                   'Hai, $name!',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 100,
               ),
-              Text(
+              const Text(
                 'Kepribadian kamu adalah',
                 style: TextStyle(
                   fontSize: 20,
@@ -197,12 +197,12 @@ class Profil_HasilMBTI extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Image.asset(
                 imagePath,
                 height: 150,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 title,
                 style: TextStyle(
@@ -211,19 +211,19 @@ class Profil_HasilMBTI extends StatelessWidget {
                   color: Colors.green[800],
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 mbti,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 description,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   color: Colors.black,
                 ),
@@ -253,7 +253,7 @@ class Profil_HasilMBTI extends StatelessWidget {
             // Navigasi ke HomeScreen
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
             );
           } else if (index == 1) {
             // Navigasi ke QuestionScreen (Tes MBTI)

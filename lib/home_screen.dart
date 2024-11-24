@@ -47,7 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
                   "Selamat datang, $userName!",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
               Padding(
@@ -55,21 +56,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Leaderboard",
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     FutureBuilder<List<MapEntry<String, int>>>(
                       future: leaderboardFuture,
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
+                          return const Center(
+                              child: CircularProgressIndicator());
                         }
                         if (snapshot.hasError) {
-                          return Center(child: Text('Terjadi kesalahan.'));
+                          return const Center(
+                              child: Text('Terjadi kesalahan.'));
                         }
 
                         final leaderboard = snapshot.data ?? [];
@@ -83,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               0: FlexColumnWidth(3),
                               1: FlexColumnWidth(1),
                             },
-                            border: TableBorder.symmetric(
+                            border: const TableBorder.symmetric(
                               inside: BorderSide(color: Colors.grey),
                             ),
                             children: leaderboard.map((entry) {
@@ -93,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
                                       '${leaderboard.indexOf(entry) + 1}. ${entry.key}',
-                                      style: TextStyle(fontSize: 16),
+                                      style: const TextStyle(fontSize: 16),
                                     ),
                                   ),
                                   Padding(
@@ -101,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Text(
                                       entry.value.toString(),
                                       textAlign: TextAlign.end,
-                                      style: TextStyle(fontSize: 16),
+                                      style: const TextStyle(fontSize: 16),
                                     ),
                                   ),
                                 ],
@@ -114,24 +117,24 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors.grey[300],
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
                     children: [
-                      Expanded(
+                      const Expanded(
                         child: Text(
                           "Kamu belum tau kepribadian kamu?\nLangsung Tes MBTI kamu, yuk!",
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       ElevatedButton(
                         onPressed: () {
                           Navigator.pushReplacement(
@@ -140,19 +143,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                 builder: (context) => QuestionScreen()),
                           );
                         },
-                        child: Text("Mulai Tes"),
+                        child: const Text("Mulai Tes"),
                       ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
 
               // Analis Section
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
-                  color: Color(0xFFD6EBE2),
+                  color: const Color(0xFFD6EBE2),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
                     mainAxisAlignment:
@@ -170,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
-                  color: Color(0xFFD6EBE2),
+                  color: const Color(0xFFD6EBE2),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
                     mainAxisAlignment:
@@ -188,28 +191,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 184, 142, 192),
-                  ),
-                  padding: const EdgeInsets.all(8.0), // Padding dalam container
-                  child: Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.spaceAround, // Atur jarak antar kolom
-                    children: [
-                      _buildAnalysisCard('assets/INTJ.png', "INTJ",
-                          "Pemikir strategis yang fokus pada masa depan."),
-                      _buildAnalysisCard('assets/INFJ.png', "INFJ",
-                          "Idealistis dan penuh inspirasi untuk "),
-                    ],
-                  ),
-                ),
-              ),
-              // Analis Section
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 184, 142, 192),
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 184, 142, 192),
                   ),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
@@ -228,8 +211,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(248, 222, 218, 147),
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 184, 142, 192),
                   ),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
@@ -248,8 +231,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(248, 222, 218, 147),
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(248, 222, 218, 147),
                   ),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
@@ -268,8 +251,28 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(248, 167, 244, 242),
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(248, 222, 218, 147),
+                  ),
+                  padding: const EdgeInsets.all(8.0), // Padding dalam container
+                  child: Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.spaceAround, // Atur jarak antar kolom
+                    children: [
+                      _buildAnalysisCard('assets/INTJ.png', "INTJ",
+                          "Pemikir strategis yang fokus pada masa depan."),
+                      _buildAnalysisCard('assets/INFJ.png', "INFJ",
+                          "Idealistis dan penuh inspirasi untuk "),
+                    ],
+                  ),
+                ),
+              ),
+              // Analis Section
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(248, 167, 244, 242),
                   ),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
@@ -288,8 +291,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(248, 167, 244, 242),
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(248, 167, 244, 242),
                   ),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
@@ -328,7 +331,7 @@ class _HomeScreenState extends State<HomeScreen> {
             // Navigasi ke HomeScreen
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
             );
           } else if (index == 1) {
             // Navigasi ke QuestionScreen (Tes MBTI)
@@ -354,12 +357,12 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(type, style: TextStyle(fontSize: 16)),
+          child: Text(type, style: const TextStyle(fontSize: 16)),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(score,
-              textAlign: TextAlign.end, style: TextStyle(fontSize: 16)),
+              textAlign: TextAlign.end, style: const TextStyle(fontSize: 16)),
         ),
       ],
     );
@@ -381,15 +384,15 @@ class _HomeScreenState extends State<HomeScreen> {
               fit: BoxFit.cover,
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Text(
             description,
             textAlign: TextAlign.center,

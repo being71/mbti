@@ -59,7 +59,7 @@ class HasilMBTI extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: Color(0xFFDAEBE3),
+      backgroundColor: const Color(0xFFDAEBE3),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -67,7 +67,7 @@ class HasilMBTI extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 'Tipe Kepribadian Kamu adalah',
                 style: TextStyle(
                   fontSize: 20,
@@ -76,12 +76,12 @@ class HasilMBTI extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Image.asset(
                 imagePath,
                 height: 150,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 title,
                 style: TextStyle(
@@ -90,26 +90,26 @@ class HasilMBTI extends StatelessWidget {
                   color: Colors.green[800],
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 mbtiType,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 description,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   color: Colors.black,
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 30),
-              Text(
+              const SizedBox(height: 30),
+              const Text(
                 'Kamu Memiliki Kepribadian yang sama dengan',
                 style: TextStyle(
                   fontSize: 16,
@@ -117,7 +117,7 @@ class HasilMBTI extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 similarity,
                 style: TextStyle(
@@ -126,7 +126,7 @@ class HasilMBTI extends StatelessWidget {
                   color: Colors.green[800],
                 ),
               ),
-              Text(
+              const Text(
                 'Populasi di dunia',
                 style: TextStyle(
                   fontSize: 16,
@@ -134,7 +134,7 @@ class HasilMBTI extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   // Panggil updateMBTI untuk memperbarui data MBTI pengguna
@@ -143,10 +143,10 @@ class HasilMBTI extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            HomeScreen()), // Ganti dengan login.dart
+                            const HomeScreen()), // Ganti dengan login.dart
                   ); // Kembali ke halaman sebelumnya
                 },
-                child: Text("OK"),
+                child: const Text("OK"),
               ),
             ],
           ),
