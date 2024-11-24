@@ -79,7 +79,7 @@ class Profil_Notfound extends StatelessWidget {
             Image.asset(
               'assets/head.png', // Path ke gambar asset
               width: 400, // Set lebar sesuai kebutuhan
-              height: 400, // Set tinggi sesuai kebutuhan
+              height: 400 // Set tinggi sesuai kebutuhan
             ),
             const Text(
               'Kamu belum melakukan\nTes MBTI!',
