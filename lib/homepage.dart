@@ -10,17 +10,17 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Homepage'),
+        title: const Text('Homepage'),
       ),
       body: FutureBuilder<List<MapEntry<String, int>>>(
         future: _firestoreService.getLeaderboard(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (snapshot.hasError) {
-            return Center(child: Text('Terjadi kesalahan.'));
+            return const Center(child: Text('Terjadi kesalahan.'));
           }
 
           final sortedMBTI = snapshot.data ?? [];
@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
               children: [
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors.blue[100],
                     borderRadius: BorderRadius.circular(16),
@@ -40,14 +40,14 @@ class HomePage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Leaderboard',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       ...sortedMBTI.map((entry) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -56,14 +56,14 @@ class HomePage extends StatelessWidget {
                             children: [
                               Text(
                                 '${sortedMBTI.indexOf(entry) + 1}. ${entry.key}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
                               Text(
                                 entry.value.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -75,7 +75,7 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -83,7 +83,7 @@ class HomePage extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => QuestionScreen()),
                     );
                   },
-                  child: Text('Go to Question Screen'),
+                  child: const Text('Go to Question Screen'),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -92,7 +92,7 @@ class HomePage extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => ProfilScreen()),
                     );
                   },
-                  child: Text('Go to Profil'),
+                  child: const Text('Go to Profil'),
                 ),
               ],
             ),

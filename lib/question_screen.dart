@@ -98,27 +98,27 @@ class _QuestionScreenState extends State<QuestionScreen> {
               questions[currentQuestionIndex]["image"]!,
               height: 150,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
                 questions[currentQuestionIndex]["question"]!,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 18),
               ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
                   onPressed: () => handleAnswer("Ya"),
-                  child: Text("Ya"),
+                  child: const Text("Ya"),
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 ElevatedButton(
                   onPressed: () => handleAnswer("Tidak"),
-                  child: Text("Tidak"),
+                  child: const Text("Tidak"),
                 ),
               ],
             ),
