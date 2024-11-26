@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'daftar.dart';
@@ -52,9 +53,11 @@ class _LoginPageState extends State<LoginPage> {
         }
 
         // Jika data pengguna ada, arahkan ke halaman utama
-        Navigator.pushReplacement(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => HomeScreen()),
+          (Route<dynamic> route) =>
+              false, // This ensures that all previous routes are removed
         );
       } else {
         setState(() {
@@ -120,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 8),
               Text(
                 _errorMessage,
-                style: TextStyle(color: Colors.red),
+                style: const TextStyle(color: Colors.red),
               ),
             ],
             const SizedBox(height: 32),

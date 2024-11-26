@@ -1,10 +1,15 @@
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'home_screen.dart';
 import 'question_screen.dart';
+import 'login.dart';
 
 class ProfilScreen extends StatelessWidget {
+  const ProfilScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<DocumentSnapshot>(
@@ -30,9 +35,8 @@ class ProfilScreen extends StatelessWidget {
         final userData = snapshot.data;
 
 // Periksa apakah MBTI tersedia
-        final String mbti = userData?['MBTI'] ??
-            "" ??
-            null; // Berikan nilai default kosong jika null
+        final String mbti =
+            userData?['MBTI'] ?? ""; // Berikan nilai default kosong jika null
         final String name = userData?['name'] ??
             'User'; // Berikan nilai default 'User' jika null
 
@@ -52,7 +56,7 @@ class ProfilScreen extends StatelessWidget {
 class Profil_Notfound extends StatelessWidget {
   final String name;
 
-  const Profil_Notfound({required this.name});
+  const Profil_Notfound({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -63,23 +67,41 @@ class Profil_Notfound extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              width: double.infinity, // Membuat container full width
+              width: double.infinity,
               color: Colors.purple[100],
-              padding: const EdgeInsets.only(top: 50, bottom: 10, left: 20),
-              child: Text(
-                'Hai, $name!',
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+              padding: const EdgeInsets.only(
+                  top: 50, bottom: 10, left: 20, right: 20),
+              child: Row(
+                mainAxisAlignment:
+                    MainAxisAlignment.spaceBetween, // Align text and icon
+                children: [
+                  Text(
+                    'Hai, $name!',
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.logout, color: Colors.black),
+                    onPressed: () async {
+                      await FirebaseAuth.instance.signOut();
+                      Navigator.pushReplacement(
+                        // ignore: use_build_context_synchronously
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 30),
             Image.asset(
-              'assets/head.png', // Path ke gambar asset
-              width: 400, // Set lebar sesuai kebutuhan
-              height: 400 // Set tinggi sesuai kebutuhan
+              'assets/head.png',
+              width: 400,
+              height: 400,
             ),
             const Text(
               'Kamu belum melakukan\nTes MBTI!',
@@ -109,22 +131,19 @@ class Profil_Notfound extends StatelessWidget {
         ],
         onTap: (index) {
           if (index == 0) {
-            // Navigasi ke HomeScreen
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const HomeScreen()),
             );
           } else if (index == 1) {
-            // Navigasi ke QuestionScreen (Tes MBTI)
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => QuestionScreen()),
             );
           } else if (index == 2) {
-            // Navigasi ke ProfilScreen
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => ProfilScreen()),
+              MaterialPageRoute(builder: (context) => const ProfilScreen()),
             );
           }
         },
@@ -133,12 +152,11 @@ class Profil_Notfound extends StatelessWidget {
   }
 }
 
-// Tampilan untuk profil jika MBTI sudah ada
 class Profil_HasilMBTI extends StatelessWidget {
   final String name;
   final String mbti;
 
-  const Profil_HasilMBTI({required this.name, required this.mbti});
+  const Profil_HasilMBTI({super.key, required this.name, required this.mbti});
 
   @override
   Widget build(BuildContext context) {
@@ -166,29 +184,47 @@ class Profil_HasilMBTI extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFDAEBE3),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 0.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: double.infinity, // Membuat container full width
-                color: Colors.purple[100],
-                padding: const EdgeInsets.only(top: 50, bottom: 10, left: 20),
-                child: Text(
-                  'Hai, $name!',
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              width: double.infinity, // Membuat container full width
+              color: Colors.purple[100],
+              padding: const EdgeInsets.only(
+                  top: 50, bottom: 10, left: 20, right: 10),
+              child: Row(
+                mainAxisAlignment:
+                    MainAxisAlignment.spaceBetween, // Align text and icon
+                children: [
+                  Text(
+                    'Hai, $name!',
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
+                  IconButton(
+                    icon: const Icon(Icons.logout, color: Colors.black),
+                    onPressed: () async {
+                      await FirebaseAuth.instance.signOut();
+                      Navigator.pushReplacement(
+                        // ignore: use_build_context_synchronously
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
+                    },
+                  ),
+                ],
               ),
-              const SizedBox(
-                height: 100,
-              ),
-              const Text(
+            ),
+            const SizedBox(
+              height: 100,
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: 20.0), // Menambahkan padding horizontal
+              child: Text(
                 'Kepribadian kamu adalah',
                 style: TextStyle(
                   fontSize: 20,
@@ -197,13 +233,17 @@ class Profil_HasilMBTI extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 20),
-              Image.asset(
-                imagePath,
-                height: 150,
-              ),
-              const SizedBox(height: 20),
-              Text(
+            ),
+            const SizedBox(height: 20),
+            Image.asset(
+              imagePath,
+              height: 150,
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 20.0), // Menambahkan padding horizontal
+              child: Text(
                 title,
                 style: TextStyle(
                   fontSize: 30,
@@ -211,8 +251,12 @@ class Profil_HasilMBTI extends StatelessWidget {
                   color: Colors.green[800],
                 ),
               ),
-              const SizedBox(height: 10),
-              Text(
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 20.0), // Menambahkan padding horizontal
+              child: Text(
                 mbti,
                 style: const TextStyle(
                   fontSize: 24,
@@ -220,8 +264,12 @@ class Profil_HasilMBTI extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              const SizedBox(height: 20),
-              Text(
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 20.0), // Menambahkan padding horizontal
+              child: Text(
                 description,
                 style: const TextStyle(
                   fontSize: 18,
@@ -229,8 +277,8 @@ class Profil_HasilMBTI extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -256,16 +304,14 @@ class Profil_HasilMBTI extends StatelessWidget {
               MaterialPageRoute(builder: (context) => const HomeScreen()),
             );
           } else if (index == 1) {
-            // Navigasi ke QuestionScreen (Tes MBTI)
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => QuestionScreen()),
             );
           } else if (index == 2) {
-            // Navigasi ke ProfilScreen
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => ProfilScreen()),
+              MaterialPageRoute(builder: (context) => const ProfilScreen()),
             );
           }
         },

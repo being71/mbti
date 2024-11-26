@@ -1,14 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mbti/home_screen.dart';
-import 'package:mbti/question_screen.dart';
 import 'firestore.dart'; // Pastikan untuk menambahkan import FirestoreService
 
 class HasilMBTI extends StatelessWidget {
   final String personalityType;
 
   // Konstruktor untuk menerima tipe kepribadian
-  HasilMBTI(this.personalityType);
+  const HasilMBTI(this.personalityType);
 
   // Fungsi untuk memperbarui MBTI di Firestore
   Future<void> updateMBTI(String personalityType) async {
