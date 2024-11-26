@@ -124,16 +124,14 @@ class DaftarPage extends StatelessWidget {
                     String password = passwordController.text;
 
                     try {
-                      // Pendaftaran di Firebase Authentication
-                      UserCredential userCredential =
-                          await _auth.createUserWithEmailAndPassword(
+                      // Pendaftaran di Firebase Authentication langsung tanpa variabel userCredential
+                      await _auth.createUserWithEmailAndPassword(
                         email: email,
                         password: password,
                       );
 
                       // Daftarkan pengguna ke Firestore
-                      await _firestoreService.registerUser(name, dob,
-                          email); // Panggil registerUser untuk menyimpan data
+                      await _firestoreService.registerUser(name, dob, email);
 
                       // Tampilkan snackbar setelah berhasil
                       _showSuccessDialog(context);

@@ -15,13 +15,11 @@ class _HomeScreenState extends State<HomeScreen> {
   final FirestoreService _firestoreService = FirestoreService();
   String userName = "User";
   String userMBTI = "";
-  late Future<List<MapEntry<String, int>>> leaderboardFuture;
 
   @override
   void initState() {
     super.initState();
     _fetchUserData();
-    leaderboardFuture = _firestoreService.getLeaderboard();
   }
 
   void _fetchUserData() async {
@@ -62,8 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
-                    FutureBuilder<List<MapEntry<String, int>>>(
-                      future: leaderboardFuture,
+                    StreamBuilder<List<MapEntry<String, int>>>(
+                      stream: _firestoreService.getLeaderboard(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -348,23 +346,6 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         },
       ),
-    );
-  }
-
-  // TableRow for leaderboard display
-  TableRow _buildTableRow(String type, String score) {
-    return TableRow(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(type, style: const TextStyle(fontSize: 16)),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(score,
-              textAlign: TextAlign.end, style: const TextStyle(fontSize: 16)),
-        ),
-      ],
     );
   }
 

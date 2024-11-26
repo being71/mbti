@@ -75,7 +75,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
       });
     } else {
       // Jika semua pertanyaan sudah terjawab, navigasi ke hasil
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => HasilMBTI(personalityType),

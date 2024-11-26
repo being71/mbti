@@ -20,12 +20,14 @@ class FirestoreService {
     }
   }
 
-  // Fungsi untuk mendapatkan data leaderboard berdasarkan MBTI
-  Future<List<MapEntry<String, int>>> getLeaderboard() async {
-    try {
-      QuerySnapshot snapshot = await _firestore.collection('users').get();
+  // Fungsi untuk mendapatkan data leaderboard berdasarkan MBTI menggunakan Stream
+  Stream<List<MapEntry<String, int>>> getLeaderboard() {
+    // Stream data untuk mendengarkan perubahan data pada koleksi 'users'
+    return _firestore.collection('users').snapshots().map((snapshot) {
+      // Membuat peta untuk menghitung jumlah setiap jenis MBTI
       Map<String, int> mbtiCount = {};
 
+      // Proses setiap dokumen dalam snapshot
       for (var doc in snapshot.docs) {
         final mbti = doc['MBTI'];
         if (mbti != null && mbti is String && mbti.trim().isNotEmpty) {
@@ -33,14 +35,12 @@ class FirestoreService {
         }
       }
 
+      // Mengurutkan MBTI berdasarkan jumlahnya
       List<MapEntry<String, int>> sortedMBTI = mbtiCount.entries.toList();
       sortedMBTI.sort((a, b) => b.value.compareTo(a.value));
 
       return sortedMBTI;
-    } catch (e) {
-      print("Error fetching leaderboard data: ${e.toString()}");
-      return [];
-    }
+    });
   }
 
   // Fungsi untuk menambahkan pengguna
