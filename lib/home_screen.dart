@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'firestore.dart';
-import 'question_screen.dart';
+import 'questionscreen.dart';
 import 'profil.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -138,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => QuestionScreen()),
+                                builder: (context) => FrontQuestionScreen()),
                           );
                         },
                         child: const Text("Mulai Tes"),
@@ -335,7 +335,7 @@ class _HomeScreenState extends State<HomeScreen> {
             // Navigasi ke QuestionScreen (Tes MBTI)
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => QuestionScreen()),
+              MaterialPageRoute(builder: (context) => FrontQuestionScreen()),
             );
           } else if (index == 2) {
             // Navigasi ke ProfilScreen
