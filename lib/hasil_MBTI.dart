@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mbti/home_screen.dart';
+import 'home_screen.dart';
 import 'firestore.dart'; // Pastikan untuk menambahkan import FirestoreService
 
 class HasilMBTI extends StatelessWidget {
@@ -32,33 +32,36 @@ class HasilMBTI extends StatelessWidget {
     String description = '';
     String similarity = '';
     String mbtiType = '';
+    Color color = Colors.white; // default color
 
     // Tentukan hasil berdasarkan personalityType
     if (personalityType == 'ENFJ') {
-      title = 'Protagonis';
-      imagePath = 'assets/ENFJ.png';
-      mbtiType = 'ENFJ';
+      title = 'Protagonis'; // Judul
+      imagePath = 'assets/ENFJ.png'; // Path gambar
+      color = const Color(0xFFDAEBE3); // Warna background
+      mbtiType = 'ENFJ'; // Tipe MBTI
       description =
-          'Pemimpin yang karismatik dan inspiratif, dan mampu memukau pendengarnya.';
-      similarity = '2.5 %';
+          'Pemimpin yang karismatik dan inspiratif, dan mampu memukau pendengarnya.'; // Deskripsi
+      similarity = '2.5 %'; // Persentase kemiripan
     } else if (personalityType == 'ENFP') {
       title = 'Pencipta';
       imagePath = 'assets/ENFP.png';
+      color = const Color(0xFFDAEBE3);
       mbtiType = 'ENFP';
       description =
           'Penuh energi, imajinatif, dan kreatif. Mereka senang mengeksplorasi kemungkinan-kemungkinan baru.';
       similarity = '8.1 %';
     } else {
       title = 'Tidak Dikenal';
-      imagePath =
-          'assets/default.jpg'; // Ganti dengan gambar default jika tipe tidak dikenali
+      imagePath = 'assets/default.jpg';
+      color = const Color(0xFFDAEBE3);
       mbtiType = personalityType;
       description = 'Kepribadian yang belum terdefinisi dengan jelas.';
       similarity = '0.1 %';
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFDAEBE3),
+      backgroundColor: color,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
