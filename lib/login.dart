@@ -2,7 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'daftar.dart';
-import 'home_screen.dart'; // Gantilah dengan halaman home Anda
+import 'home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginPage extends StatefulWidget {
@@ -35,39 +35,43 @@ class _LoginPageState extends State<LoginPage> {
         password: password,
       );
 
-      // Pastikan user berhasil login dan mendapatkan UID
       User? user = userCredential.user;
       if (user != null) {
-        // Cek apakah data pengguna sudah ada di Firestore
         DocumentSnapshot userDoc = await FirebaseFirestore.instance
             .collection('users')
-            .doc(user.uid) // Menggunakan UID dari Firebase Authentication
+            .doc(user.uid)
             .get();
 
         if (!userDoc.exists) {
-          // Jika data tidak ada, bisa lakukan pendaftaran atau penanganan lainnya
           setState(() {
             _errorMessage = 'Pengguna tidak ditemukan di Firestore.';
           });
           return;
         }
 
-        // Jika data pengguna ada, arahkan ke halaman utama
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => HomeScreen()),
-          (Route<dynamic> route) =>
-              false, // This ensures that all previous routes are removed
+          (Route<dynamic> route) => false,
         );
-      } else {
-        setState(() {
-          _errorMessage = 'Login gagal, coba lagi.';
-        });
       }
     } on FirebaseAuthException catch (e) {
-      setState(() {
-        _errorMessage = e.message ?? 'Login gagal, coba lagi.';
-      });
+      print("FirebaseAuthException caught: ${e.code} - ${e.message}");
+
+      switch (e.code) {
+        case 'user-not-found':
+          setState(() {
+            _errorMessage = 'User tidak ditemukan.';
+          }); // tambahin lagi ini case errornya
+          break;
+        default:
+          setState(() {
+            _errorMessage = e.message ?? 'Login gagal, coba lagi.';
+          });
+      }
+
+      // Tambahkan print untuk memeriksa perubahan pesan kesalahan
+      print('Error message set to: $_errorMessage');
     }
   }
 

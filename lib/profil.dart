@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'home_screen.dart';
-import 'question_screen.dart';
+import 'questionscreen.dart';
 import 'login.dart';
 
 class ProfilScreen extends StatelessWidget {
@@ -138,7 +138,7 @@ class Profil_Notfound extends StatelessWidget {
           } else if (index == 1) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => QuestionScreen()),
+              MaterialPageRoute(builder: (context) => FrontQuestionScreen()),
             );
           } else if (index == 2) {
             Navigator.pushReplacement(
@@ -306,7 +306,7 @@ class Profil_HasilMBTI extends StatelessWidget {
           } else if (index == 1) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => QuestionScreen()),
+              MaterialPageRoute(builder: (context) => FrontQuestionScreen()),
             );
           } else if (index == 2) {
             Navigator.pushReplacement(

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'question_screen.dart';
-import 'home_screen.dart';
-import 'profil.dart';
 
-class FrontQuestionScreen extends StatelessWidget {
+class QuestionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +44,7 @@ class FrontQuestionScreen extends StatelessWidget {
             // Kotak kedua dengan gambar dan teks
             Container(
               width: 220,
-              height: 200, // Meningkatkan tinggi untuk menampung teks
+              height: 200,
               decoration: BoxDecoration(
                 color: Colors.yellow[100],
                 borderRadius: BorderRadius.circular(10),
@@ -80,7 +77,7 @@ class FrontQuestionScreen extends StatelessWidget {
             // Kotak ketiga dengan gambar dan teks
             Container(
               width: 220,
-              height: 200, // Meningkatkan tinggi untuk menampung teks
+              height: 200,
               decoration: BoxDecoration(
                 color: Colors.purple[100],
                 borderRadius: BorderRadius.circular(10),
@@ -110,7 +107,7 @@ class FrontQuestionScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 40),
-            // Tombol
+            // Tombol besar dengan shadow
             Container(
               width: 250,
               height: 60,
@@ -134,11 +131,8 @@ class FrontQuestionScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => QuestionScreen()),
-                  );
-                  const Text("Mulai Tes MBTI!");
+                  // Tambahkan logika ketika tombol ditekan
+                  Text("Mulai Tes MBTI!");
                 },
                 child: const Text(
                   "Mulai Tes MBTI!",
@@ -151,43 +145,6 @@ class FrontQuestionScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.lightBlue),
-            label: 'Beranda',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.assignment, color: Colors.teal),
-            label: 'Tes MBTI',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.lightBlue),
-            label: 'Profil',
-          ),
-        ],
-        onTap: (index) {
-          if (index == 0) {
-            // Navigasi ke HomeScreen
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-            );
-          } else if (index == 1) {
-            // Navigasi ke QuestionScreen (Tes MBTI)
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => FrontQuestionScreen()),
-            );
-          } else if (index == 2) {
-            // Navigasi ke ProfilScreen
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const ProfilScreen()),
-            );
-          }
-        },
       ),
     );
   }

@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
@@ -35,22 +36,133 @@ class HasilMBTI extends StatelessWidget {
     Color color = Colors.white; // default color
 
     // Tentukan hasil berdasarkan personalityType
-    if (personalityType == 'ENFJ') {
-      title = 'Protagonis'; // Judul
-      imagePath = 'assets/ENFJ.png'; // Path gambar
-      color = const Color(0xFFDAEBE3); // Warna background
-      mbtiType = 'ENFJ'; // Tipe MBTI
+    if (personalityType == 'INTJ') {
+      title = 'Arsitek';
+      imagePath = 'assets/INTJ.png';
+      mbtiType = 'INTJ';
+      color = const Color(0xFFE6DEE9);
       description =
-          'Pemimpin yang karismatik dan inspiratif, dan mampu memukau pendengarnya.'; // Deskripsi
-      similarity = '2.5 %'; // Persentase kemiripan
-    } else if (personalityType == 'ENFP') {
-      title = 'Pencipta';
-      imagePath = 'assets/ENFP.png';
+          'Pemikir imajinatif dan strategis yang menyiapkan rencana untuk segala hal.';
+      similarity = '2.1%';
+    } else if (personalityType == 'INTP') {
+      title = 'Penemu';
+      imagePath = 'assets/INTP.png';
+      mbtiType = 'INTP';
+      color = const Color(0xFFE6DEE9);
+      description = 'Penemu inovatif yang haus akan pengetahuan.';
+      similarity = '3.3%';
+    } else if (personalityType == 'ENTJ') {
+      title = 'Komandan';
+      imagePath = 'assets/ENTJ.png';
+      mbtiType = 'ENTJ';
+      color = const Color(0xFFE6DEE9);
+      description =
+          'Pemimpin pemberani, imajinatif, dan memiliki determinasi tinggi, selalu menemukan cara - atau menciptakan caranya sendiri.';
+      similarity = '1.8%';
+    } else if (personalityType == 'ENTP') {
+      title = 'Debater';
+      imagePath = 'assets/ENTP.png';
+      mbtiType = 'ENTP';
+      color = const Color(0xFFE6DEE9);
+      description =
+          'Pemikir cerdas dan penuh rasa ingin tahu yang tidak bisa menolak tantangan intelektual.';
+      similarity = '3.2%';
+    } else if (personalityType == 'INFJ') {
+      title = 'Advokat';
+      imagePath = 'assets/INFJ.png';
+      mbtiType = 'INFJ';
       color = const Color(0xFFDAEBE3);
-      mbtiType = 'ENFP';
       description =
-          'Penuh energi, imajinatif, dan kreatif. Mereka senang mengeksplorasi kemungkinan-kemungkinan baru.';
-      similarity = '8.1 %';
+          'Idealis yang tenang dan berjiwa spiritual sekaligus inspiratif dan tak kenal lelah.';
+      similarity = '1.5%';
+    } else if (personalityType == 'INFP') {
+      title = 'Mediator';
+      imagePath = 'assets/INFP.png';
+      mbtiType = 'INFP';
+      color = const Color(0xFFDAEBE3);
+      description =
+          'Pribadi yang puitis, baik hati, dan altruistik, selalu ingin membantu demi kebaikan.';
+      similarity = '4.4%';
+    } else if (personalityType == 'ENFJ') {
+      title = 'Protagonis';
+      imagePath = 'assets/ENFJ.png';
+      mbtiType = 'ENFJ';
+      color = const Color(0xFFDAEBE3);
+      description =
+          'Pemimpin yang karismatik dan inspiratif, mampu memukau pendengarnya.';
+      similarity = '2.5%';
+    } else if (personalityType == 'ENFP') {
+      title = 'Kampiun';
+      imagePath = 'assets/ENFP.png';
+      mbtiType = 'ENFP';
+      color = const Color(0xFFDAEBE3);
+      description =
+          'Jiwa yang antusias, kreatif, dan bebas bergaul sehingga tidak pernah merasa sedih.';
+      similarity = '8.1%';
+    } else if (personalityType == 'ISTJ') {
+      title = 'Logistik';
+      imagePath = 'assets/ISTJ.png';
+      mbtiType = 'ISTJ';
+      color = const Color(0xFFDCE9E);
+      description =
+          'Individu yang berpikiran praktis, faktual, dan sangat bisa diandalkan.';
+      similarity = '11.6%';
+    } else if (personalityType == 'ISFJ') {
+      title = 'Pelindung';
+      imagePath = 'assets/ISFJ.png';
+      mbtiType = 'ISFJ';
+      color = const Color(0xFFDCE9E);
+      description =
+          'Pelindung yang sangat berdedikasi dan ramah, selalu siap membela orang yang mereka sayangi.';
+      similarity = '13.8%';
+    } else if (personalityType == 'ESTJ') {
+      title = 'Eksekutif';
+      imagePath = 'assets/ESTJ.png';
+      mbtiType = 'ESTJ';
+      color = const Color(0xFFDCE9E);
+      description =
+          'Administrator yang unggul, tak tertandingi dalam mengelola segala hal - atau bahkan manusia.';
+      similarity = '8.7%';
+    } else if (personalityType == 'ESFJ') {
+      title = 'Konsul';
+      imagePath = 'assets/ESFJ.png';
+      mbtiType = 'ESFJ';
+      color = const Color(0xFFDCE9E);
+      description =
+          'Pribadi yang penuh perhatian, supel, dan banyak dikenal, selalu ingin membantu.';
+      similarity = '12.3%';
+    } else if (personalityType == 'ISTP') {
+      title = 'Ahli Teknik';
+      imagePath = 'assets/ISTP.png';
+      mbtiType = 'ISTP';
+      color = const Color(0xFFF6EED9);
+      description =
+          'Peneliti yang pemberani dan praktis, menguasai semua jenis alat.';
+      similarity = '5.4%';
+    } else if (personalityType == 'ISFP') {
+      title = 'Artis';
+      imagePath = 'assets/ISFP.png';
+      mbtiType = 'ISFP';
+      color = const Color(0xFFF6EED9);
+      description =
+          'Seniman yang fleksibel dan memesona, selalu siap menjelajahi dan merasakan hal baru.';
+      similarity = '8.8%';
+    } else if (personalityType == 'ESTP') {
+      title = 'Penghibur';
+      imagePath = 'assets/ESTP.png';
+      mbtiType = 'ESTP';
+      color = const Color(0xFFF6EED9);
+      description =
+          'Pribadi cerdas, energik, dan sangat peka yang benar-benar menikmati hidup yang menantang.';
+      similarity = '4.3%';
+    } else if (personalityType == 'ESFP') {
+      title = 'Penghibur';
+      imagePath = 'assets/ESFP.png';
+      mbtiType = 'ESFP';
+      color = const Color(0xFFF6EED9);
+      description =
+          'Pribadi yang spontan, energik, dan antusias - bersama mereka, hidup tidak akan terasa membosankan.';
+      similarity = '6.8%';
     } else {
       title = 'Tidak Dikenal';
       imagePath = 'assets/default.jpg';

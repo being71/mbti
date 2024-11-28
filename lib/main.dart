@@ -4,7 +4,7 @@ import 'login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); // Pastikan Firebase diinisialisasi
+  await Firebase.initializeApp(); // mulai koneksi ke firebase
   runApp(MyApp());
 }
 

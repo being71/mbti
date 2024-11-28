@@ -71,6 +71,8 @@ flutter:
     - assets/ISTJ.png
     - assets/ISFJ.png
     - assets/ESTJ.png
+    - assets/theory.png
+    - assets/exercise.png
 
   uses-material-design: true
 

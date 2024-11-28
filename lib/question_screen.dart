@@ -78,7 +78,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => HasilMBTI(personalityType),
+          builder: (context) => HasilMBTI(
+              personalityType), // Mengirimkan tipe kepribadian ke halaman HasilMBTI
         ),
       );
     }

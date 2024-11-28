@@ -24,14 +24,18 @@ class FirestoreService {
   Stream<List<MapEntry<String, int>>> getLeaderboard() {
     // Stream data untuk mendengarkan perubahan data pada koleksi 'users'
     return _firestore.collection('users').snapshots().map((snapshot) {
+      // mengakses Collection 'users' pada database Firestore
       // Membuat peta untuk menghitung jumlah setiap jenis MBTI
       Map<String, int> mbtiCount = {};
 
       // Proses setiap dokumen dalam snapshot
       for (var doc in snapshot.docs) {
-        final mbti = doc['MBTI'];
-        if (mbti != null && mbti is String && mbti.trim().isNotEmpty) {
-          mbtiCount[mbti] = (mbtiCount[mbti] ?? 0) + 1;
+        // setiap dokumen dalam snapshot menjalankan kode berikut
+        final mbti = doc['MBTI']; // ambil data MBTI dari dokumen
+        if (mbti != null) {
+          // pastikan data MBTI tidak kosong
+          mbtiCount[mbti] = (mbtiCount[mbti] ?? 0) +
+              1; // cek apakah mbti = null ?? jika ya maka 0 jika tidak maka +1
         }
       }
 
@@ -39,7 +43,7 @@ class FirestoreService {
       List<MapEntry<String, int>> sortedMBTI = mbtiCount.entries.toList();
       sortedMBTI.sort((a, b) => b.value.compareTo(a.value));
 
-      return sortedMBTI;
+      return sortedMBTI; // return to map entry
     });
   }
 

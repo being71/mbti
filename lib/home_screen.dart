@@ -13,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final FirestoreService _firestoreService = FirestoreService();
-  String userName = "User";
+  String userName = "";
   String userMBTI = "";
 
   @override
@@ -23,12 +23,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _fetchUserData() async {
-    final user = FirebaseAuth.instance.currentUser;
+    final user = FirebaseAuth
+        .instance.currentUser; // mendapatkan data user yang sedang login
     if (user != null) {
-      final data = await _firestoreService.getUserData(user.uid);
+      final data = await _firestoreService
+          .getUserData(user.uid); // menganbil data user dari Firestore
       setState(() {
-        userName = data['name'] ?? "User";
-        userMBTI = data['MBTI'] ?? "";
+        userName = data['name']; // variable name pada Database = userName
+        userMBTI = data['MBTI'];
       });
     }
   }
@@ -44,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  "Selamat datang, $userName!",
+                  "Selamat datang, $userName !",
                   style: const TextStyle(
                       fontSize: 24, fontWeight: FontWeight.bold),
                 ),
@@ -61,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 8),
                     StreamBuilder<List<MapEntry<String, int>>>(
+                      // StreamBuilder untuk mendengarkan perubahan data pada Firestore secara real-time
                       stream: _firestoreService.getLeaderboard(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
@@ -74,6 +77,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
 
                         final leaderboard = snapshot.data ?? [];
+
+                        // TAMBAHKAN JIKA LEADERBOARD EMPTY
+
                         return Container(
                           decoration: BoxDecoration(
                             color: Colors.yellow[100],
@@ -81,8 +87,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           child: Table(
                             columnWidths: const {
-                              0: FlexColumnWidth(3),
-                              1: FlexColumnWidth(1),
+                              0: FlexColumnWidth(
+                                  3), // Kolom pertama memiliki fleksibilitas 3
+                              1: FlexColumnWidth(
+                                  1), // Kolom kedua memiliki fleksibilitas 1
                             },
                             border: const TableBorder.symmetric(
                               inside: BorderSide(color: Colors.grey),
@@ -341,7 +349,7 @@ class _HomeScreenState extends State<HomeScreen> {
             // Navigasi ke ProfilScreen
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => ProfilScreen()),
+              MaterialPageRoute(builder: (context) => const ProfilScreen()),
             );
           }
         },
