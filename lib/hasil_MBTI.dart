@@ -71,7 +71,7 @@ class HasilMBTI extends StatelessWidget {
       title = 'Advokat';
       imagePath = 'assets/INFJ.png';
       mbtiType = 'INFJ';
-      color = const Color(0xFFDAEBE3);
+      color = const Color.fromARGB(255, 194, 231, 215);
       description =
           'Idealis yang tenang dan berjiwa spiritual sekaligus inspiratif dan tak kenal lelah.';
       similarity = '1.5%';
@@ -79,7 +79,7 @@ class HasilMBTI extends StatelessWidget {
       title = 'Mediator';
       imagePath = 'assets/INFP.png';
       mbtiType = 'INFP';
-      color = const Color(0xFFDAEBE3);
+      color = const Color.fromARGB(255, 194, 231, 215);
       description =
           'Pribadi yang puitis, baik hati, dan altruistik, selalu ingin membantu demi kebaikan.';
       similarity = '4.4%';
@@ -87,7 +87,7 @@ class HasilMBTI extends StatelessWidget {
       title = 'Protagonis';
       imagePath = 'assets/ENFJ.png';
       mbtiType = 'ENFJ';
-      color = const Color(0xFFDAEBE3);
+      color = const Color.fromARGB(255, 194, 231, 215);
       description =
           'Pemimpin yang karismatik dan inspiratif, mampu memukau pendengarnya.';
       similarity = '2.5%';
@@ -95,7 +95,7 @@ class HasilMBTI extends StatelessWidget {
       title = 'Kampiun';
       imagePath = 'assets/ENFP.png';
       mbtiType = 'ENFP';
-      color = const Color(0xFFDAEBE3);
+      color = const Color.fromARGB(255, 194, 231, 215);
       description =
           'Jiwa yang antusias, kreatif, dan bebas bergaul sehingga tidak pernah merasa sedih.';
       similarity = '8.1%';
@@ -103,7 +103,7 @@ class HasilMBTI extends StatelessWidget {
       title = 'Logistik';
       imagePath = 'assets/ISTJ.png';
       mbtiType = 'ISTJ';
-      color = const Color(0xFFDCE9E);
+      color = const Color.fromARGB(255, 181, 214, 226);
       description =
           'Individu yang berpikiran praktis, faktual, dan sangat bisa diandalkan.';
       similarity = '11.6%';
@@ -111,7 +111,7 @@ class HasilMBTI extends StatelessWidget {
       title = 'Pelindung';
       imagePath = 'assets/ISFJ.png';
       mbtiType = 'ISFJ';
-      color = const Color(0xFFDCE9E);
+      color = const Color.fromARGB(255, 181, 214, 226);
       description =
           'Pelindung yang sangat berdedikasi dan ramah, selalu siap membela orang yang mereka sayangi.';
       similarity = '13.8%';
@@ -119,7 +119,7 @@ class HasilMBTI extends StatelessWidget {
       title = 'Eksekutif';
       imagePath = 'assets/ESTJ.png';
       mbtiType = 'ESTJ';
-      color = const Color(0xFFDCE9E);
+      color = const Color.fromARGB(255, 181, 214, 226);
       description =
           'Administrator yang unggul, tak tertandingi dalam mengelola segala hal - atau bahkan manusia.';
       similarity = '8.7%';
@@ -127,7 +127,7 @@ class HasilMBTI extends StatelessWidget {
       title = 'Konsul';
       imagePath = 'assets/ESFJ.png';
       mbtiType = 'ESFJ';
-      color = const Color(0xFFDCE9E);
+      color = const Color.fromARGB(255, 181, 214, 226);
       description =
           'Pribadi yang penuh perhatian, supel, dan banyak dikenal, selalu ingin membantu.';
       similarity = '12.3%';
