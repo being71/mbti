@@ -308,7 +308,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       _buildAnalysisCard('assets/ESTP.png', "ESTP",
                           "Pribadi cerdas, energik, dan sangat peka yang benar-benar menikmati hidup yang menantang."),
                       _buildAnalysisCard('assets/ESFP.png', "ESFP",
-                          "Pribadi yang spontan, energik, dan antusias, hidup tidak akan terasa membosankan."),
+                          "Pribadi yang spontan, energik, dan antusias, hidup tidak akan terasa membosankan."),
                     ],
                   ),
                 ),
