@@ -161,16 +161,16 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
-                  color: const Color(0xFFD6EBE2),
+                  color: const Color(0xFFE6DEE9),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
                       _buildAnalysisCard('assets/INTJ.png', "INTJ",
-                          "Pemikir strategis yang fokus pada masa depan."),
-                      _buildAnalysisCard('assets/INFJ.png', "INFJ",
-                          "Idealistis dan penuh inspirasi untuk "),
+                          "Pemikir imajinatif dan strategis."),
+                      _buildAnalysisCard('assets/INTP.png', "INTP",
+                          "Penemu inovatif yang haus akan pengetahuan."),
                     ],
                   ),
                 ),
@@ -179,16 +179,16 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
-                  color: const Color(0xFFD6EBE2),
+                  color: const Color(0xFFE6DEE9),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard('assets/INTJ.png', "INTJ",
-                          "Pemikir strategis yang fokus pada masa depan."),
-                      _buildAnalysisCard('assets/INFJ.png', "INFJ",
-                          "Idealistis dan penuh inspirasi untuk "),
+                      _buildAnalysisCard('assets/ENTJ.png', "ENTJ",
+                          "Pemimpin pemberani, imajinatif, dan memiliki determinasi tinggi."),
+                      _buildAnalysisCard('assets/ENTP.png', "ENTP",
+                          "Pemikir cerdas dan penuh rasa ingin tahu yang suka tantangan intelektual."),
                     ],
                   ),
                 ),
@@ -198,17 +198,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
                   decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 184, 142, 192),
+                    color: const Color.fromARGB(255, 194, 231, 215),
                   ),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard('assets/INTJ.png', "INTJ",
-                          "Pemikir strategis yang fokus pada masa depan."),
                       _buildAnalysisCard('assets/INFJ.png', "INFJ",
-                          "Idealistis dan penuh inspirasi untuk "),
+                          "Idealis yang tenang dan berjiwa spiritual sekaligus inspiratif dan tak kenal lelah."),
+                      _buildAnalysisCard('assets/INFP.png', "INFP",
+                          "Pribadi yang puitis, baik hati, dan altruistik, selalu ingin membantu demi kebaikan."),
                     ],
                   ),
                 ),
@@ -218,17 +218,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
                   decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 184, 142, 192),
+                    color: const Color.fromARGB(255, 194, 231, 215),
                   ),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard('assets/INTJ.png', "INTJ",
-                          "Pemikir strategis yang fokus pada masa depan."),
-                      _buildAnalysisCard('assets/INFJ.png', "INFJ",
-                          "Idealistis dan penuh inspirasi untuk "),
+                      _buildAnalysisCard('assets/ENFJ.png', "ENFJ",
+                          "Pemimpin yang karismatik dan inspiratif, mampu memukau pendengarnya."),
+                      _buildAnalysisCard('assets/ENFP.png', "ENFP",
+                          "Jiwa yang antusias, kreatif, dan bebas bergaul sehingga tidak pernah merasa sedih."),
                     ],
                   ),
                 ),
@@ -238,17 +238,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
                   decoration: const BoxDecoration(
-                    color: Color.fromARGB(248, 222, 218, 147),
+                    color: const Color.fromARGB(255, 181, 214, 226),
                   ),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard('assets/INTJ.png', "INTJ",
-                          "Pemikir strategis yang fokus pada masa depan."),
-                      _buildAnalysisCard('assets/INFJ.png', "INFJ",
-                          "Idealistis dan penuh inspirasi untuk "),
+                      _buildAnalysisCard('assets/ISTJ.png', "ISTJ",
+                          "Individu yang berpikiran praktis, faktual, dan sangat bisa diandalkan."),
+                      _buildAnalysisCard('assets/ISFJ.png', "ISFJ",
+                          "Pelindung yang sangat berdedikasi dan ramah, siap membela orang terkasih."),
                     ],
                   ),
                 ),
@@ -258,17 +258,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
                   decoration: const BoxDecoration(
-                    color: Color.fromARGB(248, 222, 218, 147),
+                    color: const Color.fromARGB(255, 181, 214, 226),
                   ),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard('assets/INTJ.png', "INTJ",
-                          "Pemikir strategis yang fokus pada masa depan."),
-                      _buildAnalysisCard('assets/INFJ.png', "INFJ",
-                          "Idealistis dan penuh inspirasi untuk "),
+                      _buildAnalysisCard('assets/ESTJ.png', "ESTJ",
+                          "Administrator yang unggul, tak tertandingi dalam mengelola segala hal - atau bahkan manusia."),
+                      _buildAnalysisCard('assets/ESFJ.png', "ESFJ",
+                          "Pribadi yang penuh perhatian, supel, dan banyak dikenal, selalu ingin membantu."),
                     ],
                   ),
                 ),
@@ -278,17 +278,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
                   decoration: const BoxDecoration(
-                    color: Color.fromARGB(248, 167, 244, 242),
+                    color: const Color(0xFFF6EED9),
                   ),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard('assets/INFJ.png', "INTJ",
-                          "Pemikir strategis yang fokus pada masa depan."),
-                      _buildAnalysisCard('assets/INFJ.png', "INFJ",
-                          "Idealistis dan penuh inspirasi untuk "),
+                      _buildAnalysisCard('assets/ISTP.png', "ISTP",
+                          "Peneliti yang pemberani dan praktis, menguasai semua jenis alat."),
+                      _buildAnalysisCard('assets/ISFP.png', "ISFP",
+                          "Seniman yang fleksibel dan memesona, selalu siap menjelajahi hal baru."),
                     ],
                   ),
                 ),
@@ -298,17 +298,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
                   decoration: const BoxDecoration(
-                    color: Color.fromARGB(248, 167, 244, 242),
+                    color: const Color(0xFFF6EED9),
                   ),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard('assets/INFJ.png', "INTJ",
-                          "Pemikir strategis yang fokus pada masa depan."),
-                      _buildAnalysisCard('assets/INFJ.png', "INFJ",
-                          "Idealistis dan penuh inspirasi untuk "),
+                      _buildAnalysisCard('assets/ESTP.png', "ESTP",
+                          "Pribadi cerdas, energik, dan sangat peka yang benar-benar menikmati hidup yang menantang."),
+                      _buildAnalysisCard('assets/ESFP.png', "ESFP",
+                          "Pribadi yang spontan, energik, dan antusias, hidup tidak akan terasa membosankan."),
                     ],
                   ),
                 ),
