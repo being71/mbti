@@ -1,4 +1,8 @@
+// ignore_for_file: avoid_print
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mbti/firestore.dart';
 import 'hasil_MBTI.dart'; // Mengimpor halaman HasilMBTI.dart
 
 class QuestionScreen extends StatefulWidget {
@@ -7,64 +11,83 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
-  // Indeks pertanyaan saat ini
   int currentQuestionIndex = 0;
 
-  // Poin untuk E/I, N/S, F/T, J/P
+  // Poin untuk setiap tipe kepribadian
+  int extrovertPoints = 0;
+  int introvertPoints = 0;
+  int intuitivePoints = 0;
+  int sensingPoints = 0;
+  int feelingPoints = 0;
+  int thinkingPoints = 0;
+  int judgingPoints = 0;
+  int perceivingPoints = 0;
+
   String personalityType = '';
+  List<Map<String, String>> questions = [];
+  bool isLoading = true; // Tambahkan indikator loading
 
-  // List pertanyaan dan gambar
-  final List<Map<String, String>> questions = [
-    {
-      "image": "assets/ty4.png",
-      "question":
-          "Apakah kamu merasa lebih berenergi setelah menghabiskan waktu dengan banyak orang dan berbicara dengan mereka?",
-      "type": "EI", // E/I
-    },
-    {
-      "image": "assets/ty1.png",
-      "question":
-          "Apakah kamu lebih suka membayangkan masa depan dan memikirkan ide-ide besar daripada berfokus pada apa yang ada di depan mata?",
-      "type": "NS", // N/S
-    },
-    {
-      "image": "assets/ty5.png",
-      "question":
-          "Ketika membuat keputusan, apakah kamu lebih cenderung mempertimbangkan perasaan dan dampaknya terhadap orang lain dibandingkan dengan fakta dan logika saja?",
-      "type": "FT", // F/T
-    },
-    {
-      "image": "assets/ty4.png",
-      "question":
-          "Apakah kamu lebih suka membuat rencana dan jadwal terperinci untuk memastikan segalanya terorganisasi dengan baik dibandingkan menghadapi situasi secara spontan?",
-      "type": "JP", // J/P
-    },
-  ];
+  @override
+  void initState() {
+    super.initState();
+    loadQuestions();
+  }
 
-  // Fungsi untuk mengakumulasi nilai berdasarkan pilihan
-  void handleAnswer(String answer) {
-    String answerType = questions[currentQuestionIndex]["type"]!;
+  Future<void> loadQuestions() async {
+    final firestoreService = FirestoreService();
+    try {
+      List<Map<String, dynamic>> fetchedQuestions =
+          await firestoreService.getMBTIQuestions();
 
-    // Menambahkan karakter berdasarkan pilihan
-    if (answer == "Ya") {
-      if (answerType == "EI") {
-        personalityType += "E"; // E untuk pertanyaan pertama
-      } else if (answerType == "NS") {
-        personalityType += "N"; // N untuk pertanyaan kedua
-      } else if (answerType == "FT") {
-        personalityType += "F"; // F untuk pertanyaan ketiga
-      } else if (answerType == "JP") {
-        personalityType += "J"; // J untuk pertanyaan keempat
+      if (fetchedQuestions.isNotEmpty) {
+        setState(() {
+          questions = fetchedQuestions.map((q) {
+            return {
+              "question": q["question"] as String,
+              "type": q["type"] as String,
+            };
+          }).toList();
+        });
+      } else {
+        print("No questions found in Firestore.");
       }
-    } else {
-      if (answerType == "EI") {
-        personalityType += "I"; // I untuk pertanyaan pertama
-      } else if (answerType == "NS") {
-        personalityType += "S"; // S untuk pertanyaan kedua
-      } else if (answerType == "FT") {
-        personalityType += "T"; // T untuk pertanyaan ketiga
-      } else if (answerType == "JP") {
-        personalityType += "P"; // P untuk pertanyaan keempat
+    } catch (e) {
+      print("Error loading questions: $e");
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  void handleAnswer(String answer) {
+    // Identifikasi tipe pertanyaan saat ini
+    String questionType = questions[currentQuestionIndex]["type"]!;
+
+    // Tambahkan poin berdasarkan jawaban
+    if (questionType == "EI") {
+      if (answer == "Ya") {
+        extrovertPoints++;
+      } else {
+        introvertPoints++;
+      }
+    } else if (questionType == "NS") {
+      if (answer == "Ya") {
+        intuitivePoints++;
+      } else {
+        sensingPoints++;
+      }
+    } else if (questionType == "FT") {
+      if (answer == "Ya") {
+        feelingPoints++;
+      } else {
+        thinkingPoints++;
+      }
+    } else if (questionType == "JP") {
+      if (answer == "Ya") {
+        judgingPoints++;
+      } else {
+        perceivingPoints++;
       }
     }
 
@@ -74,39 +97,62 @@ class _QuestionScreenState extends State<QuestionScreen> {
         currentQuestionIndex++;
       });
     } else {
-      // Jika semua pertanyaan sudah terjawab, navigasi ke hasil
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HasilMBTI(
-              personalityType), // Mengirimkan tipe kepribadian ke halaman HasilMBTI
-        ),
-      );
+      // Hitung hasil setelah semua pertanyaan selesai
+      determinePersonalityType();
     }
+  }
+
+  void determinePersonalityType() async {
+    // Tentukan E/I, N/S, F/T, J/P
+    personalityType += (extrovertPoints > introvertPoints) ? "E" : "I";
+    personalityType += (intuitivePoints > sensingPoints) ? "N" : "S";
+    personalityType += (feelingPoints > thinkingPoints) ? "F" : "T";
+    personalityType += (judgingPoints > perceivingPoints) ? "J" : "P";
+
+    // Simpan hasil ke Firestore
+    final firestoreService = FirestoreService();
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    await firestoreService.updateMBTI(userId, personalityType);
+
+    // Navigasi ke halaman hasil
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HasilMBTI(personalityType),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    // Show loading indicator while questions are being loaded
+    if (isLoading) {
+      return Scaffold(
+        appBar: AppBar(title: const Text("MBTI Test")),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    // Show a message if questions list is empty
+    if (questions.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(title: const Text("MBTI Test")),
+        body: const Center(
+            child: Text("No questions available. Please try again later.")),
+      );
+    }
+
+    // Render the question when data is available
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Pertanyaan ${currentQuestionIndex + 1}"),
-      ),
+      appBar: AppBar(title: Text("Pertanyaan ${currentQuestionIndex + 1}")),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              questions[currentQuestionIndex]["image"]!,
-              height: 150,
-            ),
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                questions[currentQuestionIndex]["question"]!,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 18),
-              ),
+            Text(
+              questions[currentQuestionIndex]["question"]!,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 18),
             ),
             const SizedBox(height: 24),
             Row(

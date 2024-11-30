@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -17,6 +19,25 @@ class FirestoreService {
     } catch (e) {
       print("Error fetching user data: ${e.toString()}");
       return {};
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getMBTIQuestions() async {
+    try {
+      QuerySnapshot snapshot =
+          await _firestore.collection('mbti_questions').orderBy('order').get();
+
+      print("Successfully fetched ${snapshot.docs.length} questions.");
+      for (var doc in snapshot.docs) {
+        print("Document ID: ${doc.id}, Data: ${doc.data()}");
+      }
+
+      return snapshot.docs
+          .map((doc) => doc.data() as Map<String, dynamic>)
+          .toList();
+    } catch (e) {
+      print("Error fetching questions: $e");
+      return [];
     }
   }
 

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'firestore.dart'; // Import file firestore.dart
 import 'login.dart'; // Ganti dengan nama halaman login Anda
