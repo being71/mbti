@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
         // Jika data pengguna ada, arahkan ke halaman utama
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
           (Route<dynamic> route) =>
               false, // This ensures that all previous routes are removed
         );

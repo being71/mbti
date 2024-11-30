@@ -198,7 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
                   decoration: const BoxDecoration(
-                    color: const Color.fromARGB(255, 194, 231, 215),
+                    color: Color.fromARGB(255, 194, 231, 215),
                   ),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
@@ -218,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
                   decoration: const BoxDecoration(
-                    color: const Color.fromARGB(255, 194, 231, 215),
+                    color: Color.fromARGB(255, 194, 231, 215),
                   ),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
@@ -238,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
                   decoration: const BoxDecoration(
-                    color: const Color.fromARGB(255, 181, 214, 226),
+                    color: Color.fromARGB(255, 181, 214, 226),
                   ),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
@@ -258,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
                   decoration: const BoxDecoration(
-                    color: const Color.fromARGB(255, 181, 214, 226),
+                    color: Color.fromARGB(255, 181, 214, 226),
                   ),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
@@ -278,7 +278,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
                   decoration: const BoxDecoration(
-                    color: const Color(0xFFF6EED9),
+                    color: Color(0xFFF6EED9),
                   ),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
@@ -298,7 +298,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
                   decoration: const BoxDecoration(
-                    color: const Color(0xFFF6EED9),
+                    color: Color(0xFFF6EED9),
                   ),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
