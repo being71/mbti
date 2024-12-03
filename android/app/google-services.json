@@ -23,6 +23,44 @@
           "other_platform_oauth_client": []
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190228762737:android:c93ebe8226f6731bf44bd0",
+        "android_client_info": {
+          "package_name": "com.example.mbti_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQvxb_GNDnxc9gvBdGITZ8k2ZsWgVGsM4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190228762737:android:0b2a13191b64fadef44bd0",
+        "android_client_info": {
+          "package_name": "com.example.tugas_mbti"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQvxb_GNDnxc9gvBdGITZ8k2ZsWgVGsM4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
     }
   ],
   "configuration_version": "1"
