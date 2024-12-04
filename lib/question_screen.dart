@@ -152,7 +152,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
           children: [
             Image.asset(
                 (questions[currentQuestionIndex]["image"] ?? '') + ".png",
-                width: 200,
+                width: 250,
                 height: 200,
                 fit: BoxFit.cover),
             const SizedBox(height: 20),
