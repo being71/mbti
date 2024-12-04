@@ -2,7 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mbti/firestore.dart';
+import 'firestore.dart';
 import 'hasil_MBTI.dart'; // Mengimpor halaman HasilMBTI.dart
 
 class QuestionScreen extends StatefulWidget {
@@ -45,6 +45,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
             return {
               "question": q["question"] as String,
               "type": q["type"] as String,
+              "image": q["image"] as String,
             };
           }).toList();
         });
@@ -149,6 +150,12 @@ class _QuestionScreenState extends State<QuestionScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Image.asset(
+                (questions[currentQuestionIndex]["image"] ?? '') + ".png",
+                width: 250,
+                height: 200,
+                fit: BoxFit.cover),
+            const SizedBox(height: 20),
             Text(
               questions[currentQuestionIndex]["question"]!,
               textAlign: TextAlign.center,
