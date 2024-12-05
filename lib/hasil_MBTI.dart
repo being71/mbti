@@ -1,13 +1,12 @@
 // ignore_for_file: file_names
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
-import 'firestore.dart'; // Pastikan untuk menambahkan import FirestoreService
 
 class HasilMBTI extends StatelessWidget {
   final String personalityType;
 
-  // Konstruktor untuk menerima tipe kepribadian
   const HasilMBTI(this.personalityType);
 
   // Fungsi untuk memperbarui MBTI di Firestore
@@ -16,9 +15,11 @@ class HasilMBTI extends StatelessWidget {
       // Dapatkan UID pengguna yang sedang login
       String userId = FirebaseAuth.instance.currentUser!.uid;
 
-      // Panggil FirestoreService untuk memperbarui data MBTI
-      FirestoreService firestoreService = FirestoreService();
-      await firestoreService.updateMBTI(userId, personalityType);
+      // Update data MBTI di Firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .update({'mbtiType': personalityType});
 
       print("MBTI berhasil diperbarui ke Firestore");
     } catch (e) {
@@ -26,246 +27,163 @@ class HasilMBTI extends StatelessWidget {
     }
   }
 
+  // Fungsi untuk mengambil data MBTI dari Firestore
+  Future<Map<String, dynamic>> fetchhasil_mbti(String personalityType) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+          .instance
+          .collection('hasil_mbti')
+          .doc(personalityType)
+          .get();
+
+      return snapshot.data() ?? {};
+    } catch (e) {
+      print("Error saat mengambil data MBTI: ${e.toString()}");
+      return {};
+    }
+  }
+
+  @override
   @override
   Widget build(BuildContext context) {
-    String title = '';
-    String imagePath = '';
-    String description = '';
-    String similarity = '';
-    String mbtiType = '';
-    Color color = Colors.white; // default color
+    return FutureBuilder<Map<String, dynamic>>(
+      future: fetchhasil_mbti(personalityType),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
 
-    // Tentukan hasil berdasarkan personalityType
-    if (personalityType == 'INTJ') {
-      title = 'Arsitek';
-      imagePath = 'assets/INTJ.png';
-      mbtiType = 'INTJ';
-      color = const Color(0xFFE6DEE9);
-      description =
-          'Pemikir imajinatif dan strategis yang menyiapkan rencana untuk segala hal.';
-      similarity = '2.1%';
-    } else if (personalityType == 'INTP') {
-      title = 'Penemu';
-      imagePath = 'assets/INTP.png';
-      mbtiType = 'INTP';
-      color = const Color(0xFFE6DEE9);
-      description = 'Penemu inovatif yang haus akan pengetahuan.';
-      similarity = '3.3%';
-    } else if (personalityType == 'ENTJ') {
-      title = 'Komandan';
-      imagePath = 'assets/ENTJ.png';
-      mbtiType = 'ENTJ';
-      color = const Color(0xFFE6DEE9);
-      description =
-          'Pemimpin pemberani, imajinatif, dan memiliki determinasi tinggi, selalu menemukan cara - atau menciptakan caranya sendiri.';
-      similarity = '1.8%';
-    } else if (personalityType == 'ENTP') {
-      title = 'Debater';
-      imagePath = 'assets/ENTP.png';
-      mbtiType = 'ENTP';
-      color = const Color(0xFFE6DEE9);
-      description =
-          'Pemikir cerdas dan penuh rasa ingin tahu yang tidak bisa menolak tantangan intelektual.';
-      similarity = '3.2%';
-    } else if (personalityType == 'INFJ') {
-      title = 'Advokat';
-      imagePath = 'assets/INFJ.png';
-      mbtiType = 'INFJ';
-      color = const Color.fromARGB(255, 194, 231, 215);
-      description =
-          'Idealis yang tenang dan berjiwa spiritual sekaligus inspiratif dan tak kenal lelah.';
-      similarity = '1.5%';
-    } else if (personalityType == 'INFP') {
-      title = 'Mediator';
-      imagePath = 'assets/INFP.png';
-      mbtiType = 'INFP';
-      color = const Color.fromARGB(255, 194, 231, 215);
-      description =
-          'Pribadi yang puitis, baik hati, dan altruistik, selalu ingin membantu demi kebaikan.';
-      similarity = '4.4%';
-    } else if (personalityType == 'ENFJ') {
-      title = 'Protagonis';
-      imagePath = 'assets/ENFJ.png';
-      mbtiType = 'ENFJ';
-      color = const Color.fromARGB(255, 194, 231, 215);
-      description =
-          'Pemimpin yang karismatik dan inspiratif, mampu memukau pendengarnya.';
-      similarity = '2.5%';
-    } else if (personalityType == 'ENFP') {
-      title = 'Kampiun';
-      imagePath = 'assets/ENFP.png';
-      mbtiType = 'ENFP';
-      color = const Color.fromARGB(255, 194, 231, 215);
-      description =
-          'Jiwa yang antusias, kreatif, dan bebas bergaul sehingga tidak pernah merasa sedih.';
-      similarity = '8.1%';
-    } else if (personalityType == 'ISTJ') {
-      title = 'Logistik';
-      imagePath = 'assets/ISTJ.png';
-      mbtiType = 'ISTJ';
-      color = const Color.fromARGB(255, 181, 214, 226);
-      description =
-          'Individu yang berpikiran praktis, faktual, dan sangat bisa diandalkan.';
-      similarity = '11.6%';
-    } else if (personalityType == 'ISFJ') {
-      title = 'Pelindung';
-      imagePath = 'assets/ISFJ.png';
-      mbtiType = 'ISFJ';
-      color = const Color.fromARGB(255, 181, 214, 226);
-      description =
-          'Pelindung yang sangat berdedikasi dan ramah, selalu siap membela orang yang mereka sayangi.';
-      similarity = '13.8%';
-    } else if (personalityType == 'ESTJ') {
-      title = 'Eksekutif';
-      imagePath = 'assets/ESTJ.png';
-      mbtiType = 'ESTJ';
-      color = const Color.fromARGB(255, 181, 214, 226);
-      description =
-          'Administrator yang unggul, tak tertandingi dalam mengelola segala hal - atau bahkan manusia.';
-      similarity = '8.7%';
-    } else if (personalityType == 'ESFJ') {
-      title = 'Konsul';
-      imagePath = 'assets/ESFJ.png';
-      mbtiType = 'ESFJ';
-      color = const Color.fromARGB(255, 181, 214, 226);
-      description =
-          'Pribadi yang penuh perhatian, supel, dan banyak dikenal, selalu ingin membantu.';
-      similarity = '12.3%';
-    } else if (personalityType == 'ISTP') {
-      title = 'Ahli Teknik';
-      imagePath = 'assets/ISTP.png';
-      mbtiType = 'ISTP';
-      color = const Color(0xFFF6EED9);
-      description =
-          'Peneliti yang pemberani dan praktis, menguasai semua jenis alat.';
-      similarity = '5.4%';
-    } else if (personalityType == 'ISFP') {
-      title = 'Artis';
-      imagePath = 'assets/ISFP.png';
-      mbtiType = 'ISFP';
-      color = const Color(0xFFF6EED9);
-      description =
-          'Seniman yang fleksibel dan memesona, selalu siap menjelajahi dan merasakan hal baru.';
-      similarity = '8.8%';
-    } else if (personalityType == 'ESTP') {
-      title = 'Penghibur';
-      imagePath = 'assets/ESTP.png';
-      mbtiType = 'ESTP';
-      color = const Color(0xFFF6EED9);
-      description =
-          'Pribadi cerdas, energik, dan sangat peka yang benar-benar menikmati hidup yang menantang.';
-      similarity = '4.3%';
-    } else if (personalityType == 'ESFP') {
-      title = 'Penghibur';
-      imagePath = 'assets/ESFP.png';
-      mbtiType = 'ESFP';
-      color = const Color(0xFFF6EED9);
-      description =
-          'Pribadi yang spontan, energik, dan antusias - bersama mereka, hidup tidak akan terasa membosankan.';
-      similarity = '6.8%';
-    } else {
-      title = 'Tidak Dikenal';
-      imagePath = 'assets/default.jpg';
-      color = const Color(0xFFDAEBE3);
-      mbtiType = personalityType;
-      description = 'Kepribadian yang belum terdefinisi dengan jelas.';
-      similarity = '0.1 %';
-    }
+        if (snapshot.hasError || !snapshot.hasData || snapshot.data!.isEmpty) {
+          return Scaffold(
+            body: Center(
+              child: Text("Error atau data tidak ditemukan."),
+            ),
+          );
+        }
 
-    return Scaffold(
-      backgroundColor: color,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text(
-                'Tipe Kepribadian Kamu adalah',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-                textAlign: TextAlign.center,
+        // Ambil data dari snapshot
+        final data = snapshot.data!;
+        final title = data['title'] ?? 'Tidak Dikenal';
+        final imagePath = data['image'] ?? 'assets/default.jpg';
+        final mbtiType = data['mbtiType'] ?? 'Tidak Dikenal';
+        final description = data['description'] ?? 'Deskripsi tidak tersedia';
+        final similarity = data['similarity'] ?? '0.0%';
+        final colorString = data['color'] ?? 'ARGB(255, 255, 255, 255)';
+        final color = _parseColor(colorString);
+
+        return Scaffold(
+          backgroundColor: color,
+          body: Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Tipe Kepribadian Kamu adalah',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+                  Image.asset(
+                    imagePath,
+                    height: 150,
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green[800],
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    mbtiType,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    description,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 30),
+                  const Text(
+                    'Kamu Memiliki Kepribadian yang sama dengan',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    similarity,
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green[800],
+                    ),
+                  ),
+                  const Text(
+                    'Populasi di dunia',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      updateMBTI(personalityType);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreen()),
+                      );
+                    },
+                    child: const Text("OK"),
+                  ),
+                ],
               ),
-              const SizedBox(height: 20),
-              Image.asset(
-                imagePath,
-                height: 150,
-              ),
-              const SizedBox(height: 20),
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green[800],
-                ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                mbtiType,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                description,
-                style: const TextStyle(
-                  fontSize: 18,
-                  color: Colors.black,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 30),
-              const Text(
-                'Kamu Memiliki Kepribadian yang sama dengan',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 10),
-              Text(
-                similarity,
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green[800],
-                ),
-              ),
-              const Text(
-                'Populasi di dunia',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  // Panggil updateMBTI untuk memperbarui data MBTI pengguna
-                  updateMBTI(personalityType);
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            const HomeScreen()), // Ganti dengan login.dart
-                  ); // Kembali ke halaman sebelumnya
-                },
-                child: const Text("OK"),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
+  }
+
+// Function to parse the ARGB string into a Color object
+  Color _parseColor(String colorString) {
+    // Example: ARGB(255, 194, 231, 215)
+    final match =
+        RegExp(r'ARGB\((\d+), (\d+), (\d+), (\d+)\)').firstMatch(colorString);
+    if (match != null) {
+      final a = int.parse(match.group(1)!);
+      final r = int.parse(match.group(2)!);
+      final g = int.parse(match.group(3)!);
+      final b = int.parse(match.group(4)!);
+      return Color.fromARGB(a, r, g, b);
+    }
+    return Colors.white; // Return a default color if parsing fails
   }
 }
