@@ -392,7 +392,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 4),
               Text(
                 description,
-                textAlign: TextAlign.start,
+                textAlign: TextAlign.justify,
                 style: TextStyle(fontSize: 14, color: Colors.grey[700]),
               ),
             ],
