@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'firestore.dart';
 import 'questionscreen.dart';
 import 'profil.dart';
+import 'hasil_MBTI.dart'; // memanggil method _parsecolor
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,15 +24,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _fetchUserData() async {
-    final user = FirebaseAuth
-        .instance.currentUser; // mendapatkan data user yang sedang login
+    final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      final data = await _firestoreService
-          .getUserData(user.uid); // menganbil data user dari Firestore
-      setState(() {
-        userName = data['name']; // variable name pada Database = userName
-        userMBTI = data['MBTI'];
-      });
+      try {
+        final data = await _firestoreService.getUserData(user.uid);
+        print('Fetched user data: $data');
+        setState(() {
+          userName = data['name'] ?? "Unknown";
+          userMBTI = data['MBTI'] ?? "Not specified";
+        });
+      } catch (e) {
+        print("Error fetching user data: ${e.toString()}");
+      }
     }
   }
 
@@ -167,10 +171,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard('assets/INTJ.png', "INTJ",
-                          "Pemikir imajinatif dan strategis."),
-                      _buildAnalysisCard('assets/INTP.png', "INTP",
-                          "Penemu inovatif yang haus akan pengetahuan."),
+                      _buildAnalysisCard("INTJ"),
+                      _buildAnalysisCard("INTP"),
                     ],
                   ),
                 ),
@@ -185,10 +187,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard('assets/ENTJ.png', "ENTJ",
-                          "Pemimpin pemberani, imajinatif, dan memiliki determinasi tinggi."),
-                      _buildAnalysisCard('assets/ENTP.png', "ENTP",
-                          "Pemikir cerdas dan penuh rasa ingin tahu yang suka tantangan intelektual."),
+                      _buildAnalysisCard("ENTJ"),
+                      _buildAnalysisCard("ENTP"),
                     ],
                   ),
                 ),
@@ -205,10 +205,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard('assets/INFJ.png', "INFJ",
-                          "Idealis yang tenang dan berjiwa spiritual sekaligus inspiratif dan tak kenal lelah."),
-                      _buildAnalysisCard('assets/INFP.png', "INFP",
-                          "Pribadi yang puitis, baik hati, dan altruistik, selalu ingin membantu demi kebaikan."),
+                      _buildAnalysisCard("INFJ"),
+                      _buildAnalysisCard("INFP"),
                     ],
                   ),
                 ),
@@ -225,10 +223,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard('assets/ENFJ.png', "ENFJ",
-                          "Pemimpin yang karismatik dan inspiratif, mampu memukau pendengarnya."),
-                      _buildAnalysisCard('assets/ENFP.png', "ENFP",
-                          "Jiwa yang antusias, kreatif, dan bebas bergaul sehingga tidak pernah merasa sedih."),
+                      _buildAnalysisCard("ENFJ"),
+                      _buildAnalysisCard("ENFP"),
                     ],
                   ),
                 ),
@@ -245,10 +241,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard('assets/ISTJ.png', "ISTJ",
-                          "Individu yang berpikiran praktis, faktual, dan sangat bisa diandalkan."),
-                      _buildAnalysisCard('assets/ISFJ.png', "ISFJ",
-                          "Pelindung yang sangat berdedikasi dan ramah, siap membela orang terkasih."),
+                      _buildAnalysisCard("ISTJ"),
+                      _buildAnalysisCard("ISFJ"),
                     ],
                   ),
                 ),
@@ -265,10 +259,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard('assets/ESTJ.png', "ESTJ",
-                          "Administrator yang unggul, tak tertandingi dalam mengelola segala hal - atau bahkan manusia."),
-                      _buildAnalysisCard('assets/ESFJ.png', "ESFJ",
-                          "Pribadi yang penuh perhatian, supel, dan banyak dikenal, selalu ingin membantu."),
+                      _buildAnalysisCard("ESTJ"),
+                      _buildAnalysisCard("ESFJ"),
                     ],
                   ),
                 ),
@@ -285,10 +277,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard('assets/ISTP.png', "ISTP",
-                          "Peneliti yang pemberani dan praktis, menguasai semua jenis alat."),
-                      _buildAnalysisCard('assets/ISFP.png', "ISFP",
-                          "Seniman yang fleksibel dan memesona, selalu siap menjelajahi hal baru."),
+                      _buildAnalysisCard("ISTP"),
+                      _buildAnalysisCard("ISFP"),
                     ],
                   ),
                 ),
@@ -305,10 +295,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard('assets/ESTP.png', "ESTP",
-                          "Pribadi cerdas, energik, dan sangat peka yang benar-benar menikmati hidup yang menantang."),
-                      _buildAnalysisCard('assets/ESFP.png', "ESFP",
-                          "Pribadi yang spontan, energik, dan antusias, hidup tidak akan terasa membosankan."),
+                      _buildAnalysisCard("ESTP"),
+                      _buildAnalysisCard("ESTJ"),
                     ],
                   ),
                 ),
@@ -357,38 +345,60 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Widget to create an analysis card for different MBTI types
-  Widget _buildAnalysisCard(
-      String imagePath, String title, String description) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: Image.asset(
-              imagePath,
-              height: 100,
-              width: 100,
-              fit: BoxFit.cover,
-            ),
+  Widget _buildAnalysisCard(String mbtiType) {
+    return FutureBuilder<Map<String, dynamic>>(
+      future: _firestoreService.getAnalysisData(mbtiType),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (snapshot.hasError) {
+          print('Error in _buildAnalysisCard: ${snapshot.error}');
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+        if (!snapshot.hasData) {
+          return const Center(child: Text('Data not available'));
+        }
+
+        final data = snapshot.data!;
+        print('Fetched data for $mbtiType: $data');
+        final imagePath = data['image'] ?? 'assets/default.png';
+        final description = data['description'] ?? 'No description available';
+        final colorString = data['color'] ?? 'ARGB(255, 255, 255, 255)';
+        final color = parseColor(colorString);
+
+        return Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.asset(
+                  imagePath,
+                  height: 100,
+                  width: 100,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                mbtiType,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black, // Use the color here
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                description,
+                textAlign: TextAlign.start,
+                style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+              ),
+            ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            description,
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 14, color: Colors.grey[700]),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

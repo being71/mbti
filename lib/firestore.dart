@@ -6,6 +6,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 class FirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  Future<Map<String, dynamic>> getAnalysisData(String mbtiType) async {
+    try {
+      DocumentSnapshot doc =
+          await _firestore.collection('hasil_mbti').doc(mbtiType).get();
+      if (doc.exists) {
+        return doc.data() as Map<String, dynamic>;
+      } else {
+        throw Exception('Dokumen tidak ditemukan');
+      }
+    } catch (e) {
+      throw Exception('Gagal mengambil data: $e');
+    }
+  }
+
   // Fungsi untuk mendapatkan data pengguna berdasarkan UID
   Future<Map<String, dynamic>> getUserData(String userId) async {
     try {

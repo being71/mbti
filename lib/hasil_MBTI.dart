@@ -4,6 +4,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
 
+// Function to parse the ARGB string into a Color object
+Color parseColor(String colorString) {
+  // Example: ARGB(255, 194, 231, 215)
+  final match =
+      RegExp(r'ARGB\((\d+), (\d+), (\d+), (\d+)\)').firstMatch(colorString);
+  if (match != null) {
+    final a = int.parse(match.group(1)!);
+    final r = int.parse(match.group(2)!);
+    final g = int.parse(match.group(3)!);
+    final b = int.parse(match.group(4)!);
+    return Color.fromARGB(a, r, g, b);
+  }
+  return Colors.white; // Return a default color if parsing fails
+}
+
 class HasilMBTI extends StatelessWidget {
   final String personalityType;
 
@@ -73,7 +88,7 @@ class HasilMBTI extends StatelessWidget {
         final description = data['description'] ?? 'Deskripsi tidak tersedia';
         final similarity = data['similarity'] ?? '0.0%';
         final colorString = data['color'] ?? 'ARGB(255, 255, 255, 255)';
-        final color = _parseColor(colorString);
+        final color = parseColor(colorString);
 
         return Scaffold(
           backgroundColor: color,
@@ -170,20 +185,5 @@ class HasilMBTI extends StatelessWidget {
         );
       },
     );
-  }
-
-// Function to parse the ARGB string into a Color object
-  Color _parseColor(String colorString) {
-    // Example: ARGB(255, 194, 231, 215)
-    final match =
-        RegExp(r'ARGB\((\d+), (\d+), (\d+), (\d+)\)').firstMatch(colorString);
-    if (match != null) {
-      final a = int.parse(match.group(1)!);
-      final r = int.parse(match.group(2)!);
-      final g = int.parse(match.group(3)!);
-      final b = int.parse(match.group(4)!);
-      return Color.fromARGB(a, r, g, b);
-    }
-    return Colors.white; // Return a default color if parsing fails
   }
 }
