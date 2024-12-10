@@ -155,7 +155,6 @@ class Profil_HasilMBTI extends StatelessWidget {
           return const Center(
               child: Text('Terjadi kesalahan saat memuat hasil MBTI.'));
         }
-
         if (!snapshot.hasData || !snapshot.data!.exists) {
           return const Center(child: Text('MBTI tidak ditemukan.'));
         }
@@ -169,26 +168,26 @@ class Profil_HasilMBTI extends StatelessWidget {
         final color = parseColor(colorString);
 
         return Scaffold(
-          backgroundColor: color,
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  width: double.infinity,
-                  color: Colors.purple[100],
-                  padding: const EdgeInsets.only(
-                      top: 50, bottom: 10, left: 20, right: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Hai, $name!',
-                        style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
-                      ),
+      backgroundColor: const Color(0xFFDAEBE3),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              width: double.infinity, // Membuat container full width
+              padding: const EdgeInsets.only(
+                  top: 50, bottom: 10, left: 20, right: 10),
+              child: Row(
+                mainAxisAlignment:
+                    MainAxisAlignment.spaceBetween, // Align text and icon
+                children: [
+                  Text(
+                    'Hai, $name!',
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                       IconButton(
                         icon: const Icon(Icons.logout, color: Colors.black),
                         onPressed: () async {
