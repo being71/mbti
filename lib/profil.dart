@@ -1,11 +1,10 @@
-// ignore_for_file: camel_case_types
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'home_screen.dart';
 import 'questionscreen.dart';
 import 'login.dart';
+import 'hasil_MBTI.dart';
 
 class ProfilScreen extends StatelessWidget {
   const ProfilScreen({super.key});
@@ -18,14 +17,12 @@ class ProfilScreen extends StatelessWidget {
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .get(),
       builder: (context, snapshot) {
-        // Tampilkan indikator loading saat data sedang diambil
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         }
 
-        // Tampilkan pesan error jika terjadi kesalahan saat mengambil data
         if (snapshot.hasError) {
           return const Scaffold(
             body: Center(child: Text('Terjadi kesalahan. Silakan coba lagi!')),
@@ -33,26 +30,19 @@ class ProfilScreen extends StatelessWidget {
         }
 
         final userData = snapshot.data;
+        final String MBTI = userData?['MBTI'] ?? "";
+        final String name = userData?['name'] ?? 'User';
 
-// Periksa apakah MBTI tersedia
-        final String mbti =
-            userData?['MBTI'] ?? ""; // Berikan nilai default kosong jika null
-        final String name = userData?['name'] ??
-            'User'; // Berikan nilai default 'User' jika null
-
-        if (mbti.isEmpty) {
-          // Jika MBTI belum tersedia, tampilkan Profil_Notfound
+        if (MBTI.isEmpty) {
           return Profil_Notfound(name: name);
         } else {
-          // Jika MBTI tersedia, tampilkan hasil MBTI
-          return Profil_HasilMBTI(name: name, mbti: mbti);
+          return Profil_HasilMBTI(name: name, MBTI: MBTI);
         }
       },
     );
   }
 }
 
-// Tampilan untuk profil jika MBTI belum ada
 class Profil_Notfound extends StatelessWidget {
   final String name;
 
@@ -72,8 +62,7 @@ class Profil_Notfound extends StatelessWidget {
               padding: const EdgeInsets.only(
                   top: 50, bottom: 10, left: 20, right: 20),
               child: Row(
-                mainAxisAlignment:
-                    MainAxisAlignment.spaceBetween, // Align text and icon
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     'Hai, $name!',
@@ -88,7 +77,6 @@ class Profil_Notfound extends StatelessWidget {
                     onPressed: () async {
                       await FirebaseAuth.instance.signOut();
                       Navigator.pushReplacement(
-                        // ignore: use_build_context_synchronously
                         context,
                         MaterialPageRoute(builder: (context) => LoginPage()),
                       );
@@ -98,18 +86,11 @@ class Profil_Notfound extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            Image.asset(
-              'assets/head.png',
-              width: 400,
-              height: 400,
-            ),
+            Image.asset('assets/head.png', width: 400, height: 400),
             const Text(
               'Kamu belum melakukan\nTes MBTI!',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.black,
-              ),
+              style: TextStyle(fontSize: 18, color: Colors.black),
             ),
           ],
         ),
@@ -154,168 +135,159 @@ class Profil_Notfound extends StatelessWidget {
 
 class Profil_HasilMBTI extends StatelessWidget {
   final String name;
-  final String mbti;
+  final String MBTI;
 
-  const Profil_HasilMBTI({super.key, required this.name, required this.mbti});
+  const Profil_HasilMBTI({super.key, required this.name, required this.MBTI});
 
   @override
   Widget build(BuildContext context) {
-    String title = '';
-    String imagePath = '';
-    String description = '';
+    return FutureBuilder<DocumentSnapshot>(
+      future: FirebaseFirestore.instance
+          .collection('hasil_mbti')
+          .doc(MBTI) // Fetch the MBTI type details
+          .get(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-    // Tentukan hasil berdasarkan MBTI
-    if (mbti == 'ENFJ') {
-      title = 'Protagonis';
-      imagePath = 'assets/ENFJ.png';
-      description =
-          'Pemimpin yang karismatik dan inspiratif, dan mampu memukau pendengarnya.';
-    } else if (mbti == 'ENFP') {
-      title = 'Pencipta';
-      imagePath = 'assets/ENFP.png';
-      description =
-          'Penuh energi, imajinatif, dan kreatif. Mereka senang mengeksplorasi kemungkinan-kemungkinan baru.';
-    } else {
-      title = 'Tidak Dikenal';
-      imagePath = 'assets/default.jpg';
-      description = 'Kepribadian yang belum terdefinisi dengan jelas.';
-    }
+        if (snapshot.hasError) {
+          return const Center(
+              child: Text('Terjadi kesalahan saat memuat hasil MBTI.'));
+        }
 
-    return Scaffold(
-      backgroundColor: const Color(0xFFDAEBE3),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              width: double.infinity, // Membuat container full width
-              color: Colors.purple[100],
-              padding: const EdgeInsets.only(
-                  top: 50, bottom: 10, left: 20, right: 10),
-              child: Row(
-                mainAxisAlignment:
-                    MainAxisAlignment.spaceBetween, // Align text and icon
-                children: [
-                  Text(
-                    'Hai, $name!',
+        if (!snapshot.hasData || !snapshot.data!.exists) {
+          return const Center(child: Text('MBTI tidak ditemukan.'));
+        }
+
+        final mbtiData = snapshot.data!;
+        final String title = mbtiData['title'] ?? 'Tidak Dikenal';
+        final String description =
+            mbtiData['description'] ?? 'Deskripsi tidak tersedia.';
+        final String imagePath = mbtiData['image'] ?? 'assets/default.jpg';
+        final colorString = mbtiData['color'] ?? 'ARGB(255, 255, 255, 255)';
+        final color = parseColor(colorString);
+
+        return Scaffold(
+          backgroundColor: color,
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  width: double.infinity,
+                  color: Colors.purple[100],
+                  padding: const EdgeInsets.only(
+                      top: 50, bottom: 10, left: 20, right: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Hai, $name!',
+                        style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.logout, color: Colors.black),
+                        onPressed: () async {
+                          await FirebaseAuth.instance.signOut();
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 100),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Text(
+                    'Kepribadian kamu adalah',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Image.asset(imagePath, height: 150),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green[800]),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Text(
+                    MBTI,
                     style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.logout, color: Colors.black),
-                    onPressed: () async {
-                      await FirebaseAuth.instance.signOut();
-                      Navigator.pushReplacement(
-                        // ignore: use_build_context_synchronously
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginPage()),
-                      );
-                    },
+                ),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Text(
+                    description,
+                    style: const TextStyle(fontSize: 18, color: Colors.black),
+                    textAlign: TextAlign.center,
                   ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 100,
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 20.0), // Menambahkan padding horizontal
-              child: Text(
-                'Kepribadian kamu adalah',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
                 ),
-                textAlign: TextAlign.center,
-              ),
+              ],
             ),
-            const SizedBox(height: 20),
-            Image.asset(
-              imagePath,
-              height: 150,
-            ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 20.0), // Menambahkan padding horizontal
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green[800],
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 20.0), // Menambahkan padding horizontal
-              child: Text(
-                mbti,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 20.0), // Menambahkan padding horizontal
-              child: Text(
-                description,
-                style: const TextStyle(
-                  fontSize: 18,
-                  color: Colors.black,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.lightBlue),
-            label: 'Beranda',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.assignment, color: Colors.teal),
-            label: 'Tes MBTI',
+          bottomNavigationBar: BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home, color: Colors.lightBlue),
+                label: 'Beranda',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.assignment, color: Colors.teal),
+                label: 'Tes MBTI',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person, color: Colors.lightBlue),
+                label: 'Profil',
+              ),
+            ],
+            onTap: (index) {
+              if (index == 0) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                );
+              } else if (index == 1) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => FrontQuestionScreen()),
+                );
+              } else if (index == 2) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProfilScreen()),
+                );
+              }
+            },
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.lightBlue),
-            label: 'Profil',
-          ),
-        ],
-        onTap: (index) {
-          if (index == 0) {
-            // Navigasi ke HomeScreen
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-            );
-          } else if (index == 1) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => FrontQuestionScreen()),
-            );
-          } else if (index == 2) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const ProfilScreen()),
-            );
-          }
-        },
-      ),
+        );
+      },
     );
   }
 }
