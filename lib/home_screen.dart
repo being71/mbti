@@ -81,7 +81,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Text('Terjadi kesalahan.'));
                         }
 
-                        final leaderboard = snapshot.data ?? [];
+                        final leaderboard =
+                            (snapshot.data ?? []).take(5).toList();
 
                         // TAMBAHKAN JIKA LEADERBOARD EMPTY
 
