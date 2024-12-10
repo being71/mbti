@@ -189,7 +189,6 @@ class Profil_HasilMBTI extends StatelessWidget {
           children: [
             Container(
               width: double.infinity, // Membuat container full width
-              color: Colors.purple[100],
               padding: const EdgeInsets.only(
                   top: 50, bottom: 10, left: 20, right: 10),
               child: Row(

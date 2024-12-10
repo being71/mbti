@@ -4,6 +4,7 @@ import 'firestore.dart';
 import 'questionscreen.dart';
 import 'profil.dart';
 import 'hasil_MBTI.dart'; // memanggil method _parsecolor
+import 'detail_page.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -165,14 +166,13 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
-                  color: const Color(0xFFE6DEE9),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard("INTJ"),
-                      _buildAnalysisCard("INTP"),
+                      _buildAnalysisCard("INTJ", 0),
+                      _buildAnalysisCard("INTP", 0),
                     ],
                   ),
                 ),
@@ -181,14 +181,13 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
-                  color: const Color(0xFFE6DEE9),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard("ENTJ"),
-                      _buildAnalysisCard("ENTP"),
+                      _buildAnalysisCard("ENTJ", 0),
+                      _buildAnalysisCard("ENTP", 0),
                     ],
                   ),
                 ),
@@ -197,16 +196,14 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
-                  decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 194, 231, 215),
-                  ),
+                  decoration: const BoxDecoration(),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard("INFJ"),
-                      _buildAnalysisCard("INFP"),
+                      _buildAnalysisCard("INFJ", 1),
+                      _buildAnalysisCard("INFP", 1),
                     ],
                   ),
                 ),
@@ -215,16 +212,14 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
-                  decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 194, 231, 215),
-                  ),
+                  decoration: const BoxDecoration(),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard("ENFJ"),
-                      _buildAnalysisCard("ENFP"),
+                      _buildAnalysisCard("ENFJ", 1),
+                      _buildAnalysisCard("ENFP", 1),
                     ],
                   ),
                 ),
@@ -233,16 +228,14 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
-                  decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 181, 214, 226),
-                  ),
+                  decoration: const BoxDecoration(),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard("ISTJ"),
-                      _buildAnalysisCard("ISFJ"),
+                      _buildAnalysisCard("ISTJ", 2),
+                      _buildAnalysisCard("ISFJ", 2),
                     ],
                   ),
                 ),
@@ -251,16 +244,14 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
-                  decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 181, 214, 226),
-                  ),
+                  decoration: const BoxDecoration(),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard("ESTJ"),
-                      _buildAnalysisCard("ESFJ"),
+                      _buildAnalysisCard("ESTJ", 2),
+                      _buildAnalysisCard("ESFJ", 2),
                     ],
                   ),
                 ),
@@ -269,16 +260,14 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFF6EED9),
-                  ),
+                  decoration: const BoxDecoration(),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard("ISTP"),
-                      _buildAnalysisCard("ISFP"),
+                      _buildAnalysisCard("ISTP", 3),
+                      _buildAnalysisCard("ISFP", 3),
                     ],
                   ),
                 ),
@@ -287,16 +276,14 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFF6EED9),
-                  ),
+                  decoration: const BoxDecoration(),
                   padding: const EdgeInsets.all(8.0), // Padding dalam container
                   child: Row(
                     mainAxisAlignment:
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
-                      _buildAnalysisCard("ESTP"),
-                      _buildAnalysisCard("ESFP"),
+                      _buildAnalysisCard("ESTP", 3),
+                      _buildAnalysisCard("ESFP", 3),
                     ],
                   ),
                 ),
@@ -345,61 +332,96 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildAnalysisCard(String mbtiType) {
-    return FutureBuilder<Map<String, dynamic>>(
-      future: _firestoreService.getAnalysisData(mbtiType),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (snapshot.hasError) {
-          print('Error in _buildAnalysisCard: ${snapshot.error}');
-          return Center(child: Text('Error: ${snapshot.error}'));
-        }
-        if (!snapshot.hasData) {
-          return const Center(child: Text('Data not available'));
-        }
+  Widget _buildAnalysisCard(String mbtiType, index) {
+    final List<Color> colors = [
+      Color.fromARGB(255, 216, 192, 223),
+      Color.fromARGB(255, 194, 231, 215),
+      Color.fromARGB(255, 181, 214, 226),
+      Color(0xFFF6EED9),
+    ];
 
-        final data = snapshot.data!;
-        print('Fetched data for $mbtiType: $data');
-        final imagePath = data['image'] ?? 'assets/default.png';
-        final description_home =
-            data['description_home'] ?? 'No description available';
-        final colorString = data['color'] ?? 'ARGB(255, 255, 255, 255)';
-        final color = parseColor(colorString);
+    final color = colors[index % colors.length];
 
-        return Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ClipRRect(
+    return GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DetailPage(mbtiType: mbtiType),
+            ),
+          );
+        },
+        child: FutureBuilder<Map<String, dynamic>>(
+          future: _firestoreService.getAnalysisData(mbtiType),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.hasError) {
+              print('Error in _buildAnalysisCard: ${snapshot.error}');
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
+            if (!snapshot.hasData) {
+              return const Center(child: Text('Data not available'));
+            }
+
+            final data = snapshot.data!;
+            print('Fetched data for $mbtiType: $data');
+            final imagePath = data['image'] ?? 'assets/default.png';
+            final description_home =
+                data['description_home'] ?? 'No description available';
+            final colorString = data['color'] ?? 'ARGB(255, 255, 255, 255)';
+            final color = parseColor(colorString);
+
+            return Container(
+              width: MediaQuery.of(context).size.width *
+                  0.4, // Ukuran proporsional
+              padding: const EdgeInsets.all(8.0),
+              margin: const EdgeInsets.symmetric(vertical: 8.0),
+              decoration: BoxDecoration(
+                color: colors[index % colors.length],
                 borderRadius: BorderRadius.circular(8.0),
-                child: Image.asset(
-                  imagePath,
-                  height: 100,
-                  width: 100,
-                  fit: BoxFit.cover,
-                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 5,
+                    spreadRadius: 2,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
               ),
-              const SizedBox(height: 8),
-              Text(
-                mbtiType,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black, // Use the color here
-                ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.asset(
+                      imagePath,
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    mbtiType,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black, // Use the color here
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    description_home,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                  ),
+                ],
               ),
-              const SizedBox(height: 4),
-              Text(
-                description_home,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14, color: Colors.grey[700]),
-              ),
-            ],
-          ),
-        );
-      },
-    );
+            );
+          },
+        ));
   }
 }
