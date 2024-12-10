@@ -296,7 +296,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         MainAxisAlignment.spaceAround, // Atur jarak antar kolom
                     children: [
                       _buildAnalysisCard("ESTP"),
-                      _buildAnalysisCard("ESTJ"),
+                      _buildAnalysisCard("ESFP"),
                     ],
                   ),
                 ),
@@ -363,7 +363,8 @@ class _HomeScreenState extends State<HomeScreen> {
         final data = snapshot.data!;
         print('Fetched data for $mbtiType: $data');
         final imagePath = data['image'] ?? 'assets/default.png';
-        final description = data['description'] ?? 'No description available';
+        final description_home =
+            data['description_home'] ?? 'No description available';
         final colorString = data['color'] ?? 'ARGB(255, 255, 255, 255)';
         final color = parseColor(colorString);
 
@@ -391,7 +392,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 4),
               Text(
-                description,
+                description_home,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 14, color: Colors.grey[700]),
               ),
