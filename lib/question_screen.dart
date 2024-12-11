@@ -1,16 +1,17 @@
 // ignore_for_file: avoid_print
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'firestore.dart';
 import 'hasil_MBTI.dart'; // Mengimpor halaman HasilMBTI.dart
 
 class QuestionScreen extends StatefulWidget {
+  const QuestionScreen({super.key});
+
   @override
-  _QuestionScreenState createState() => _QuestionScreenState();
+  QuestionScreenState createState() => QuestionScreenState();
 }
 
-class _QuestionScreenState extends State<QuestionScreen> {
+class QuestionScreenState extends State<QuestionScreen> {
   int currentQuestionIndex = 0;
 
   // Poin untuk setiap tipe kepribadian
@@ -110,11 +111,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
     personalityType += (feelingPoints > thinkingPoints) ? "F" : "T";
     personalityType += (judgingPoints > perceivingPoints) ? "J" : "P";
 
-    // Simpan hasil ke Firestore
-    final firestoreService = FirestoreService();
-    String userId = FirebaseAuth.instance.currentUser!.uid;
-    await firestoreService.updateMBTI(userId, personalityType);
-
     // Navigasi ke halaman hasil
     Navigator.pushReplacement(
       context,
@@ -143,25 +139,53 @@ class _QuestionScreenState extends State<QuestionScreen> {
       );
     }
 
-    // Render the question when data is available
     return Scaffold(
       appBar: AppBar(title: Text("Pertanyaan ${currentQuestionIndex + 1}")),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-                (questions[currentQuestionIndex]["image"] ?? '') + ".png",
-                width: 250,
-                height: 200,
-                fit: BoxFit.cover),
-            const SizedBox(height: 20),
-            Text(
-              questions[currentQuestionIndex]["question"]!,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 18),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey.shade300),
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    spreadRadius: 1,
+                    blurRadius: 5,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              constraints: const BoxConstraints(
+                maxHeight: 370, // Batas tinggi statis
+              ),
+              child: Column(
+                children: [
+                  Image.asset(
+                    (questions[currentQuestionIndex]["image"] ?? '') + ".png",
+                    width: 250,
+                    height: 200,
+                    fit: BoxFit.cover,
+                  ),
+                  const SizedBox(height: 30), // Jarak antara gambar dan teks
+                  Container(
+                    height: 100, // Tinggi tetap untuk teks
+                    child: Text(
+                      questions[currentQuestionIndex]["question"]!,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 8), // Jarak antara kontainer dan tombol
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

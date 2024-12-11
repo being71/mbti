@@ -4,12 +4,35 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirestoreService {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  // Fungsi login pengguna menggunakan email dan password
+  Future<User?> loginUser(String email, String password) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+
+      return userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      throw Exception(e.message ?? 'Login gagal, coba lagi.');
+    }
+  }
+
+// Fungsi untuk mengecek apakah data pengguna ada di Firestore
+  Future<bool> isUserExists(String userId) async {
+    try {
+      DocumentSnapshot userDoc =
+          await firestore.collection('users').doc(userId).get();
+      return userDoc.exists;
+    } catch (e) {
+      throw Exception("Gagal memeriksa data pengguna: $e");
+    }
+  }
 
   Future<Map<String, dynamic>> getAnalysisData(String mbtiType) async {
     try {
       DocumentSnapshot doc =
-          await _firestore.collection('hasil_mbti').doc(mbtiType).get();
+          await firestore.collection('hasil_mbti').doc(mbtiType).get();
       if (doc.exists) {
         return doc.data() as Map<String, dynamic>;
       } else {
@@ -24,7 +47,7 @@ class FirestoreService {
   Future<Map<String, dynamic>> getUserData(String userId) async {
     try {
       DocumentSnapshot userDoc =
-          await _firestore.collection('users').doc(userId).get();
+          await firestore.collection('users').doc(userId).get();
       if (userDoc.exists) {
         return userDoc.data() as Map<String, dynamic>;
       } else {
@@ -39,7 +62,7 @@ class FirestoreService {
   Future<List<Map<String, dynamic>>> getMBTIQuestions() async {
     try {
       QuerySnapshot snapshot =
-          await _firestore.collection('mbti_questions').orderBy('order').get();
+          await firestore.collection('mbti_questions').orderBy('order').get();
 
       print("Successfully fetched ${snapshot.docs.length} questions.");
       for (var doc in snapshot.docs) {
@@ -58,7 +81,7 @@ class FirestoreService {
   // Fungsi untuk mendapatkan data leaderboard berdasarkan MBTI menggunakan Stream
   Stream<List<MapEntry<String, int>>> getLeaderboard() {
     // Stream data untuk mendengarkan perubahan data pada koleksi 'users'
-    return _firestore.collection('users').snapshots().map((snapshot) {
+    return firestore.collection('users').snapshots().map((snapshot) {
       // mengakses Collection 'users' pada database Firestore
       // Membuat peta untuk menghitung jumlah setiap jenis MBTI
       Map<String, int> mbtiCount = {};
@@ -66,7 +89,7 @@ class FirestoreService {
       // Proses setiap dokumen dalam snapshot
       for (var doc in snapshot.docs) {
         // setiap dokumen dalam snapshot menjalankan kode berikut
-        final mbti = doc['MBTI']; // ambil data MBTI dari dokumen
+        final mbti = doc['mbtiType']; // ambil data MBTI dari dokumen
         if (mbti != null) {
           // pastikan data MBTI tidak kosong
           mbtiCount[mbti] = (mbtiCount[mbti] ?? 0) +
@@ -86,25 +109,48 @@ class FirestoreService {
   Future<void> registerUser(String name, String dob, String email) async {
     try {
       String userId = FirebaseAuth.instance.currentUser!.uid;
-      await _firestore.collection('users').doc(userId).set({
+      await firestore.collection('users').doc(userId).set({
         'name': name,
         'dob': dob,
         'email': email,
-        'MBTI': null,
+        'mbtiType': null,
       });
     } catch (e) {
       print('Error saving user data: ${e.toString()}');
     }
   }
 
-  // Fungsi untuk memperbarui MBTI pengguna
-  Future<void> updateMBTI(String userId, String personalityType) async {
+  // Fungsi untuk memperbarui MBTI di Firestore
+  Future<void> updateMBTI(String personalityType) async {
     try {
-      await _firestore.collection('users').doc(userId).update({
-        'MBTI': personalityType,
-      });
+      // Dapatkan UID pengguna yang sedang login
+      String userId = FirebaseAuth.instance.currentUser!.uid;
+
+      // Update data MBTI di Firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .update({'mbtiType': personalityType});
+
+      print("MBTI berhasil diperbarui ke Firestore");
     } catch (e) {
-      print('Error updating MBTI: ${e.toString()}');
+      print("Error saat memperbarui MBTI: ${e.toString()}");
+    }
+  }
+
+  // Fungsi untuk mengambil data MBTI dari Firestore
+  Future<Map<String, dynamic>> fetchhasil_mbti(String personalityType) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+          .instance
+          .collection('hasil_mbti')
+          .doc(personalityType)
+          .get();
+
+      return snapshot.data() ?? {};
+    } catch (e) {
+      print("Error saat mengambil data MBTI: ${e.toString()}");
+      return {};
     }
   }
 }

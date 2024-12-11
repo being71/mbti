@@ -30,13 +30,13 @@ class ProfilScreen extends StatelessWidget {
         }
 
         final userData = snapshot.data;
-        final String MBTI = userData?['MBTI'] ?? "";
+        final String mbtiType = userData?['mbtiType'] ?? "";
         final String name = userData?['name'] ?? 'User';
 
-        if (MBTI.isEmpty) {
+        if (mbtiType.isEmpty) {
           return Profil_Notfound(name: name);
         } else {
-          return Profil_HasilMBTI(name: name, MBTI: MBTI);
+          return Profil_HasilMBTI(name: name, mbtiType: mbtiType);
         }
       },
     );
@@ -119,7 +119,8 @@ class Profil_Notfound extends StatelessWidget {
           } else if (index == 1) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => FrontQuestionScreen()),
+              MaterialPageRoute(
+                  builder: (context) => const FrontQuestionScreen()),
             );
           } else if (index == 2) {
             Navigator.pushReplacement(
@@ -135,16 +136,17 @@ class Profil_Notfound extends StatelessWidget {
 
 class Profil_HasilMBTI extends StatelessWidget {
   final String name;
-  final String MBTI;
+  final String mbtiType;
 
-  const Profil_HasilMBTI({super.key, required this.name, required this.MBTI});
+  const Profil_HasilMBTI(
+      {super.key, required this.name, required this.mbtiType});
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<DocumentSnapshot>(
       future: FirebaseFirestore.instance
           .collection('hasil_mbti')
-          .doc(MBTI) // Fetch the MBTI type details
+          .doc(mbtiType) // Fetch the MBTI type details
           .get(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -232,7 +234,7 @@ class Profil_HasilMBTI extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Text(
-                    MBTI,
+                    mbtiType,
                     style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -276,7 +278,7 @@ class Profil_HasilMBTI extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => FrontQuestionScreen()),
+                      builder: (context) => const FrontQuestionScreen()),
                 );
               } else if (index == 2) {
                 Navigator.pushReplacement(

@@ -4,6 +4,8 @@ import 'home_screen.dart';
 import 'profil.dart';
 
 class FrontQuestionScreen extends StatelessWidget {
+  const FrontQuestionScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -136,7 +138,8 @@ class FrontQuestionScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => QuestionScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const QuestionScreen()),
                   );
                   const Text("Mulai Tes MBTI!");
                 },
@@ -178,7 +181,8 @@ class FrontQuestionScreen extends StatelessWidget {
             // Navigasi ke QuestionScreen (Tes MBTI)
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => FrontQuestionScreen()),
+              MaterialPageRoute(
+                  builder: (context) => const FrontQuestionScreen()),
             );
           } else if (index == 2) {
             // Navigasi ke ProfilScreen

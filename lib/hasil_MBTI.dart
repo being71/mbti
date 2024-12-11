@@ -1,8 +1,7 @@
 // ignore_for_file: file_names
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
+import 'firestore.dart';
 
 // Function to parse the ARGB string into a Color object
 Color parseColor(String colorString) {
@@ -22,50 +21,16 @@ Color parseColor(String colorString) {
 class HasilMBTI extends StatelessWidget {
   final String personalityType;
 
-  const HasilMBTI(this.personalityType);
-
-  // Fungsi untuk memperbarui MBTI di Firestore
-  Future<void> updateMBTI(String personalityType) async {
-    try {
-      // Dapatkan UID pengguna yang sedang login
-      String userId = FirebaseAuth.instance.currentUser!.uid;
-
-      // Update data MBTI di Firestore
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .update({'mbtiType': personalityType});
-
-      print("MBTI berhasil diperbarui ke Firestore");
-    } catch (e) {
-      print("Error saat memperbarui MBTI: ${e.toString()}");
-    }
-  }
-
-  // Fungsi untuk mengambil data MBTI dari Firestore
-  Future<Map<String, dynamic>> fetchhasil_mbti(String personalityType) async {
-    try {
-      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
-          .instance
-          .collection('hasil_mbti')
-          .doc(personalityType)
-          .get();
-
-      return snapshot.data() ?? {};
-    } catch (e) {
-      print("Error saat mengambil data MBTI: ${e.toString()}");
-      return {};
-    }
-  }
+  const HasilMBTI(this.personalityType, {super.key});
 
   @override
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Map<String, dynamic>>(
-      future: fetchhasil_mbti(personalityType),
+      future: FirestoreService().fetchhasil_mbti(personalityType),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(
+          return const Scaffold(
             body: Center(
               child: CircularProgressIndicator(),
             ),
@@ -73,7 +38,7 @@ class HasilMBTI extends StatelessWidget {
         }
 
         if (snapshot.hasError || !snapshot.hasData || snapshot.data!.isEmpty) {
-          return Scaffold(
+          return const Scaffold(
             body: Center(
               child: Text("Error atau data tidak ditemukan."),
             ),
@@ -169,7 +134,7 @@ class HasilMBTI extends StatelessWidget {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
-                      updateMBTI(personalityType);
+                      FirestoreService().updateMBTI(personalityType);
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
