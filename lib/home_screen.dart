@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
         print('Fetched user data: $data');
         setState(() {
           userName = data['name'] ?? "Unknown";
-          userMBTI = data['MBTI'] ?? "Not specified";
+          userMBTI = data['mbtiType'] ?? "Not specified";
         });
       } catch (e) {
         print("Error fetching user data: ${e.toString()}");
@@ -401,18 +401,5 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           },
         ));
-  }
-
-  Color _parseColor(String colorString) {
-    final match =
-        RegExp(r'ARGB\((\d+), (\d+), (\d+), (\d+)\)').firstMatch(colorString);
-    if (match != null) {
-      final a = int.parse(match.group(1)!);
-      final r = int.parse(match.group(2)!);
-      final g = int.parse(match.group(3)!);
-      final b = int.parse(match.group(4)!);
-      return Color.fromARGB(a, r, g, b);
-    }
-    return Colors.white;
   }
 }

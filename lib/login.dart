@@ -2,22 +2,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'daftar.dart';
+import 'firestore.dart';
 import 'home_screen.dart'; // Gantilah dengan halaman home Anda
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
-  _LoginPageState createState() => _LoginPageState();
+  LoginPageState createState() => LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   String _errorMessage = '';
 
-  // Fungsi login dengan Firebase Authentication
   Future<void> _login() async {
     String email = _emailController.text.trim();
     String password = _passwordController.text.trim();
@@ -30,43 +30,28 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      // Gunakan FirestoreService untuk login
+      User? user = await FirestoreService().loginUser(email, password);
 
-      // Pastikan user berhasil login dan mendapatkan UID
-      User? user = userCredential.user;
       if (user != null) {
-        // Cek apakah data pengguna sudah ada di Firestore
-        DocumentSnapshot userDoc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid) // Menggunakan UID dari Firebase Authentication
-            .get();
+        bool userExists = await FirestoreService().isUserExists(user.uid);
 
-        if (!userDoc.exists) {
-          // Jika data tidak ada, bisa lakukan pendaftaran atau penanganan lainnya
+        if (userExists) {
+          Navigator.pushAndRemoveUntil(
+            // ignore: use_build_context_synchronously
+            context,
+            MaterialPageRoute(builder: (context) => const HomeScreen()),
+            (Route<dynamic> route) => false,
+          );
+        } else {
           setState(() {
             _errorMessage = 'Pengguna tidak ditemukan di Firestore.';
           });
-          return;
         }
-
-        // Jika data pengguna ada, arahkan ke halaman utama
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
-          (Route<dynamic> route) =>
-              false, // This ensures that all previous routes are removed
-        );
-      } else {
-        setState(() {
-          _errorMessage = 'Login gagal, coba lagi.';
-        });
       }
-    } on FirebaseAuthException catch (e) {
+    } catch (e) {
       setState(() {
-        _errorMessage = e.message ?? 'Login gagal, coba lagi.';
+        _errorMessage = e.toString();
       });
     }
   }

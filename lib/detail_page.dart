@@ -17,7 +17,7 @@ class DetailPage extends StatelessWidget {
   Future<List<String>> _fetchUsersWithSameMBTI() async {
     final snapshot = await FirebaseFirestore.instance
         .collection('users')
-        .where('MBTI', isEqualTo: mbtiType)
+        .where('mbtiType')
         .limit(5)
         .get();
 
