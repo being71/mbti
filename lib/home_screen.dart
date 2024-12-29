@@ -48,23 +48,47 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Welcome Section
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  "Selamat datang, $userName !",
-                  style: const TextStyle(
-                      fontSize: 24, fontWeight: FontWeight.bold),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 25,
+                      backgroundColor: Colors.lightBlueAccent,
+                      child: Text(
+                        userName.isNotEmpty ? userName[0].toUpperCase() : "U",
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Text(
+                      "Selamat datang, $userName!",
+                      style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87),
+                    ),
+                  ],
                 ),
               ),
+
+              // Leaderboard Section
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "Leaderboard",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      "🏆 Leaderboard",
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.deepPurple),
                     ),
                     const SizedBox(height: 8),
                     StreamBuilder<List<MapEntry<String, int>>>(
@@ -85,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         return Container(
                           decoration: BoxDecoration(
-                            color: Colors.yellow[100],
+                            color: Colors.yellow[50],
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Table(
@@ -101,9 +125,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      '${leaderboard.indexOf(entry) + 1}. ${entry.key}',
-                                      style: const TextStyle(fontSize: 16),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                          size: 16,
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          '${leaderboard.indexOf(entry) + 1}. ${entry.key}',
+                                          style: const TextStyle(fontSize: 16),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                   Padding(
@@ -125,20 +159,30 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 16),
+
+              // Tes MBTI Section
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(8),
+                    gradient: LinearGradient(
+                      colors: [
+                        Color.fromARGB(255, 181, 214, 226),
+                        Color.fromARGB(255, 216, 192, 223),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
                     children: [
                       const Expanded(
                         child: Text(
-                          "Kamu belum tau kepribadian kamu?\nLangsung Tes MBTI kamu, yuk!",
-                          style: TextStyle(fontSize: 16),
+                          "Kamu belum tahu kepribadian kamu?\nLangsung Tes MBTI kamu, yuk!",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Color.fromARGB(255, 43, 40, 40),
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                       const SizedBox(width: 16),
@@ -394,7 +438,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     description_home,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: const Color.fromARGB(255, 71, 71, 71)),
                   ),
                 ],
               ),

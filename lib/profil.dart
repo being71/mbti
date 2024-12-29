@@ -227,7 +227,7 @@ class Profil_HasilMBTI extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
-                        color: Colors.green[800]),
+                        color: const Color.fromARGB(255, 0, 0, 0)),
                   ),
                 ),
                 const SizedBox(height: 10),

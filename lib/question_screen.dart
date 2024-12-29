@@ -26,7 +26,7 @@ class QuestionScreenState extends State<QuestionScreen> {
 
   String personalityType = '';
   List<Map<String, String>> questions = [];
-  bool isLoading = true; // Tambahkan indikator loading
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -63,10 +63,8 @@ class QuestionScreenState extends State<QuestionScreen> {
   }
 
   void handleAnswer(String answer) {
-    // Identifikasi tipe pertanyaan saat ini
     String questionType = questions[currentQuestionIndex]["type"]!;
 
-    // Tambahkan poin berdasarkan jawaban
     if (questionType == "EI") {
       if (answer == "Ya") {
         extrovertPoints++;
@@ -93,25 +91,21 @@ class QuestionScreenState extends State<QuestionScreen> {
       }
     }
 
-    // Lanjutkan ke pertanyaan berikutnya
     if (currentQuestionIndex < questions.length - 1) {
       setState(() {
         currentQuestionIndex++;
       });
     } else {
-      // Hitung hasil setelah semua pertanyaan selesai
       determinePersonalityType();
     }
   }
 
   void determinePersonalityType() async {
-    // Tentukan E/I, N/S, F/T, J/P
     personalityType += (extrovertPoints > introvertPoints) ? "E" : "I";
     personalityType += (intuitivePoints > sensingPoints) ? "N" : "S";
     personalityType += (feelingPoints > thinkingPoints) ? "F" : "T";
     personalityType += (judgingPoints > perceivingPoints) ? "J" : "P";
 
-    // Navigasi ke halaman hasil
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -122,25 +116,36 @@ class QuestionScreenState extends State<QuestionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Show loading indicator while questions are being loaded
     if (isLoading) {
       return Scaffold(
-        appBar: AppBar(title: const Text("MBTI Test")),
+        appBar: AppBar(
+          title: const Text("MBTI Test"),
+          backgroundColor: const Color.fromARGB(255, 194, 231, 215),
+        ),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
 
-    // Show a message if questions list is empty
     if (questions.isEmpty) {
       return Scaffold(
-        appBar: AppBar(title: const Text("MBTI Test")),
+        appBar: AppBar(
+          title: const Text("MBTI Test"),
+          backgroundColor: const Color.fromARGB(255, 194, 231, 215),
+        ),
         body: const Center(
             child: Text("No questions available. Please try again later.")),
       );
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text("Pertanyaan ${currentQuestionIndex + 1}")),
+      appBar: AppBar(
+        title: Text(
+          "Pertanyaan ${currentQuestionIndex + 1}",
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: const Color.fromARGB(255, 194, 231, 215),
+      ),
+      backgroundColor: const Color.fromARGB(255, 246, 238, 217),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -148,7 +153,16 @@ class QuestionScreenState extends State<QuestionScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.shade300),
+                gradient: const LinearGradient(
+                  colors: [
+                    Color.fromARGB(255, 255, 255, 255),
+                    Color.fromARGB(255, 242, 236, 244),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                border:
+                    Border.all(color: const Color.fromARGB(255, 194, 231, 215)),
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
@@ -160,7 +174,7 @@ class QuestionScreenState extends State<QuestionScreen> {
                 ],
               ),
               constraints: const BoxConstraints(
-                maxHeight: 370, // Batas tinggi statis
+                maxHeight: 370,
               ),
               child: Column(
                 children: [
@@ -170,31 +184,47 @@ class QuestionScreenState extends State<QuestionScreen> {
                     height: 200,
                     fit: BoxFit.cover,
                   ),
-                  const SizedBox(height: 30), // Jarak antara gambar dan teks
-                  Container(
-                    height: 100, // Tinggi tetap untuk teks
-                    child: Text(
-                      questions[currentQuestionIndex]["question"]!,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  const SizedBox(height: 30),
+                  Text(
+                    questions[currentQuestionIndex]["question"]!,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey.shade800,
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 8), // Jarak antara kontainer dan tombol
+            const SizedBox(height: 16),
+            LinearProgressIndicator(
+              value: (currentQuestionIndex + 1) / questions.length,
+              backgroundColor: const Color.fromARGB(255, 246, 238, 217),
+              color: const Color.fromARGB(255, 181, 214, 226),
+            ),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
                   onPressed: () => handleAnswer("Ya"),
                   child: const Text("Ya"),
                 ),
                 const SizedBox(width: 16),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
                   onPressed: () => handleAnswer("Tidak"),
                   child: const Text("Tidak"),
                 ),
