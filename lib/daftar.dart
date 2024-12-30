@@ -1,8 +1,8 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'firestore.dart'; // Import file firestore.dart
-import 'login.dart'; // Ganti dengan nama halaman login Anda
+import 'firestore.dart';
+import 'login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class DaftarPage extends StatelessWidget {
@@ -12,7 +12,7 @@ class DaftarPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final FirestoreService _firestoreService = FirestoreService();
-  final FirebaseAuth _auth = FirebaseAuth.instance; // FirebaseAuth instance
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +138,6 @@ class DaftarPage extends StatelessWidget {
                       // Tampilkan snackbar setelah berhasil
                       _showSuccessDialog(context);
                     } on FirebaseAuthException catch (e) {
-                      // Menangani error jika ada masalah saat registrasi
                       print('Error: ${e.message}');
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(e.message ?? 'Error')),
@@ -167,8 +166,7 @@ class DaftarPage extends StatelessWidget {
   void _showSuccessDialog(BuildContext context) {
     showDialog(
       context: context,
-      barrierDismissible:
-          false, // Membuat dialog tidak bisa ditutup dengan klik di luar
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text(
@@ -185,9 +183,7 @@ class DaftarPage extends StatelessWidget {
                 // Navigasi ke halaman login setelah klik OK
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          LoginPage()), // Ganti dengan login.dart
+                  MaterialPageRoute(builder: (context) => LoginPage()),
                 );
               },
               child: const Text('OK', style: TextStyle(color: Colors.orange)),

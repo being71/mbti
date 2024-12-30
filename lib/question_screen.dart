@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'firestore.dart';
-import 'hasil_MBTI.dart'; // Mengimpor halaman HasilMBTI.dart
+import 'hasil_MBTI.dart';
 
 class QuestionScreen extends StatefulWidget {
   const QuestionScreen({super.key});
@@ -14,7 +14,6 @@ class QuestionScreen extends StatefulWidget {
 class QuestionScreenState extends State<QuestionScreen> {
   int currentQuestionIndex = 0;
 
-  // Poin untuk setiap tipe kepribadian
   int extrovertPoints = 0;
   int introvertPoints = 0;
   int intuitivePoints = 0;

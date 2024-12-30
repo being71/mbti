@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'daftar.dart';
 import 'firestore.dart';
-import 'home_screen.dart'; // Gantilah dengan halaman home Anda
+import 'home_screen.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -30,7 +30,6 @@ class LoginPageState extends State<LoginPage> {
     }
 
     try {
-      // Gunakan FirestoreService untuk login
       User? user = await FirestoreService().loginUser(email, password);
 
       if (user != null) {
@@ -38,7 +37,6 @@ class LoginPageState extends State<LoginPage> {
 
         if (userExists) {
           Navigator.pushAndRemoveUntil(
-            // ignore: use_build_context_synchronously
             context,
             MaterialPageRoute(builder: (context) => const HomeScreen()),
             (Route<dynamic> route) => false,
@@ -118,12 +116,11 @@ class LoginPageState extends State<LoginPage> {
                 ElevatedButton(
                   onPressed: _login,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        Colors.green.shade100, // Masuk button color
+                    backgroundColor: Colors.green.shade100,
                   ),
                   child: const Text(
                     'Masuk',
-                    style: TextStyle(color: Colors.black), // Teks hitam
+                    style: TextStyle(color: Colors.black),
                   ),
                 ),
                 ElevatedButton(
@@ -136,8 +133,7 @@ class LoginPageState extends State<LoginPage> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        Colors.orange.shade100, // Daftar button color
+                    backgroundColor: Colors.orange.shade100,
                   ),
                   child: const Text('Daftar',
                       style: TextStyle(color: Colors.black)),

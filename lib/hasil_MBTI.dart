@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'firestore.dart';
 
-// Function to parse the ARGB string into a Color object
 Color parseColor(String colorString) {
-  // Example: ARGB(255, 194, 231, 215)
   final match =
       RegExp(r'ARGB\((\d+), (\d+), (\d+), (\d+)\)').firstMatch(colorString);
   if (match != null) {
@@ -15,7 +13,7 @@ Color parseColor(String colorString) {
     final b = int.parse(match.group(4)!);
     return Color.fromARGB(a, r, g, b);
   }
-  return Colors.white; // Return a default color if parsing fails
+  return Colors.white;
 }
 
 class HasilMBTI extends StatelessWidget {

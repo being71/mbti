@@ -176,12 +176,11 @@ class Profil_HasilMBTI extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  width: double.infinity, // Membuat container full width
+                  width: double.infinity,
                   padding: const EdgeInsets.only(
                       top: 50, bottom: 10, left: 20, right: 10),
                   child: Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween, // Align text and icon
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Hai, $name!',

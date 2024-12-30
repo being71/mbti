@@ -13,7 +13,6 @@ class FrontQuestionScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Kotak pertama dengan gambar dan teks
             Container(
               width: 220,
               height: 200,
@@ -46,10 +45,9 @@ class FrontQuestionScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            // Kotak kedua dengan gambar dan teks
             Container(
               width: 220,
-              height: 200, // Meningkatkan tinggi untuk menampung teks
+              height: 200,
               decoration: BoxDecoration(
                 color: Colors.yellow[100],
                 borderRadius: BorderRadius.circular(10),
@@ -79,10 +77,9 @@ class FrontQuestionScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            // Kotak ketiga dengan gambar dan teks
             Container(
               width: 220,
-              height: 200, // Meningkatkan tinggi untuk menampung teks
+              height: 200,
               decoration: BoxDecoration(
                 color: Colors.purple[100],
                 borderRadius: BorderRadius.circular(10),
@@ -112,7 +109,6 @@ class FrontQuestionScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 40),
-            // Tombol
             Container(
               width: 250,
               height: 60,
@@ -130,7 +126,7 @@ class FrontQuestionScreen extends StatelessWidget {
               ),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white, // Warna tombol
+                  backgroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -146,8 +142,8 @@ class FrontQuestionScreen extends StatelessWidget {
                 child: const Text(
                   "Mulai Tes MBTI!",
                   style: TextStyle(
-                    fontSize: 18, // Ukuran font
-                    fontWeight: FontWeight.bold, // Ketebalan font
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
